@@ -10,15 +10,26 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import BasicTextFields from './components/GoalsIndex'
+import CreateGoals from './components/CreateGoalsForm'
 
 function App() {
   return (
-    <div>
-      <div>
-        <NavBar />
-      </div>
-    </div>
+    <Router>
+         <div>
+            <NavBar />
+          </div>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <SignUp />
+          </Route>
+          <Route path="/goals/new">
+            <CreateGoals />
+          </Route>
+        </Switch>
+    </Router>
   )
 }
 
