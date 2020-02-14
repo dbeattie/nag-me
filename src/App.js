@@ -10,6 +10,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import CreateGoals from './components/CreateGoalsForm'
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/register">
             <SignUp />
+          </Route>
+          <Route path="/goals/new">
+            <CreateGoals />
           </Route>
         </Switch>
     </Router>
