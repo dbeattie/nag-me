@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
+import Login from './components/login';
+import SignUp from './components/register';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -47,7 +48,7 @@ function App() {
           <Login />
         </Route>
         <Route path="/register">
-          <Register />
+          <SignUp />
         </Route>
         <Route path="/goals">
           <Goals />
@@ -72,21 +73,21 @@ function Home() {
   );
 }
 
-function Login() {
-  return (
-    <div>
-      <h2>Login</h2>
-    </div>
-  );
-}
+// function Login() {
+//   return (
+//     <div>
+//       <h2>Login</h2>
+//     </div>
+//   );
+// }
 
-function Register() {
-  return (
-    <div>
-      <h2>Register</h2>
-    </div>
-  );
-}
+// function Register() {
+//   return (
+//     <div>
+//       <h2>Register</h2>
+//     </div>
+//   );
+// }
 
 function Goals() {
   return (
