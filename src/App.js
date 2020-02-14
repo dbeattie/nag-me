@@ -13,11 +13,19 @@ import {
 
 function App() {
   return (
-    <div>
-      <div>
-        <NavBar />
-      </div>
-    </div>
+    <Router>
+         <div>
+            <NavBar />
+          </div>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <SignUp />
+          </Route>
+        </Switch>
+    </Router>
   )
 }
 
