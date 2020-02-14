@@ -10,35 +10,30 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import BasicTextFields from './components/GoalsIndex'
+import CreateGoals from './components/CreateGoalsForm'
 
 function App() {
   return (
-    <div>
-      <div>
-        <NavBar />
-      </div>
-    </div>
+    <Router>
+         <div>
+            <NavBar />
+          </div>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <SignUp />
+          </Route>
+          <Route path="/goals/new">
+            <CreateGoals />
+          </Route>
+        </Switch>
+    </Router>
   )
 }
 
 export default App;
-
-// THIS IS DON'S GOALS FUNCTION WHICH CALLS BasicTextFields which should be in components/creategoals.js
-// NEEDS to be a separate component that can simply be rendered here.
-// export default function Goals() {
-//   return (
-//     <div>
-//       <h2>Create Goals</h2>
-//       <BasicTextFields />
-//       <h2>Frequency</h2>
-//       {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
-//       <h2>Completion Date</h2>
-//       {/* Insert Calendar function for date picker - might need to create a new component */}
-//       <h3>Date Picker</h3>
-//     </div>
-//   );
-// }
 
 // OLD REACT ROUTER ROUTES
 // function App() {
