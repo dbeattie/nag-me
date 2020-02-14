@@ -39,7 +39,7 @@ export default function NavBar() {
             Nag.me
           </Typography>
           <Router>
-          <Button component= {Link} to="/nags" color="inherit">Goals</Button>
+          <Button component= {Link} to="/goals" color="inherit">Goals</Button>
           <Button component= {Link} to="/nags" color="inherit">Nags</Button>
           <Button component= {Link} to="/login" color="inherit">Login</Button>
           <Button component= {Link} to="/register" color="inherit">Register</Button>
