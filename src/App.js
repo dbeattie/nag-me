@@ -10,6 +10,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import BasicTextFields from './components/GoalsIndex'
 
 function App() {
   return (
@@ -76,3 +77,62 @@ export default App;
 //   </Router>
 //   );
 // }
+
+export default App;
+
+
+// function Home() {
+//   return (
+//     <div>
+//       <h2>Home</h2>
+//     </div>
+//   );
+// }
+
+// function Login() {
+//   return (
+//     <div>
+//       <h2>Login</h2>
+//     </div>
+//   );
+// }
+
+// function Register() {
+//   return (
+//     <div>
+//       <h2>Register</h2>
+//     </div>
+//   );
+// }
+
+function Goals() {
+  return (
+    <div>
+      <h2>Create Goals</h2>
+      <BasicTextFields />
+      <h2>Frequency</h2>
+      {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
+      <h2>Completion Date</h2>
+      {/* Insert Calendar function for date picker - might need to create a new component */}
+      <h3>Date Picker</h3>
+    </div>
+  );
+}
+
+// function Goals() {
+//   return (
+//     <div>
+//       <h2>Goals</h2>
+//     </div>
+//   );
+// }
+
+
+// function Nags() {
+//   return (
+//     <div>
+//       <h2>Nags</h2>
+//     </div>
+//   );
+// }
+
