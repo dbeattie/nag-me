@@ -12,6 +12,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import BasicTextFields from './components/GoalsIndex'
 
 function App() {
     return (
@@ -134,6 +135,20 @@ export default App;
 //   );
 // }
 
+function Goals() {
+  return (
+    <div>
+      <h2>Create Goals</h2>
+      <BasicTextFields />
+      <h2>Frequency</h2>
+      {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
+      <h2>Completion Date</h2>
+      {/* Insert Calendar function for date picker - might need to create a new component */}
+      <h3>Date Picker</h3>
+    </div>
+  );
+}
+
 // function Goals() {
 //   return (
 //     <div>
@@ -141,6 +156,7 @@ export default App;
 //     </div>
 //   );
 // }
+
 
 // function Nags() {
 //   return (
