@@ -37,7 +37,7 @@ const onRedirectCallback = appState => {
 ReactDOM.render(
   <Auth0Provider
     domain={config.domain}
-    client_id={config.clientId}
+    client_id={config.clientId}    
     redirect_uri={window.location.origin}
     onRedirectCallback={onRedirectCallback}
   >
@@ -47,3 +47,5 @@ ReactDOM.render(
 );
 
 serviceWorker.unregister();
+
+// NOTE: may need to change redirect to "redirect_uri={window.location.origin}" in production

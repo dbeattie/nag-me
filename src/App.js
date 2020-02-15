@@ -14,6 +14,12 @@ import Profile from "./components/Profile";
 import history from "./utils/history";
 
 function App() {
+  const { loading } = useAuth0();
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+  
   return (
     <div className="App">
       {/* Don't forget to include the history module */}
