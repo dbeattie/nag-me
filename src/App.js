@@ -1,45 +1,81 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+// from the Auth0
 
-import NavBar from './components/NavBar';
-import Login from './components/Login';
-import SignUp from './components/Register';
-import CreateGoals from './components/CreateGoalsForm';
-import NagTracker from './components/NagTracker';
+import React from "react";
+import NavBar from "./components/NavBar";
+import { useAuth0 } from "./react-auth0-spa";
+import PrivateRoute from "./components/PrivateRoute";
 
-import './App.css';
+// src/App.js
 
 
+// New - import the React Router components, and the Profile page component
+import { Router, Route, Switch } from "react-router-dom";
+import Profile from "./components/Profile";
+import history from "./utils/history";
 
 function App() {
   return (
-    <Router>
-         <div>
-            <NavBar />
-          </div>
+    <div className="App">
+      {/* Don't forget to include the history module */}
+      <Router history={history}>
+        <header>
+          <NavBar />
+        </header>
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <SignUp />
-          </Route>
-          <Route path="/goals/new">
-            <CreateGoals />
-          </Route>
-          <Route path="/nags">
-            <NagTracker />
-          </Route>
+          <Route path="/" exact />
+          <PrivateRoute path="/profile" component={Profile} />
         </Switch>
-    </Router>
-  )
+      </Router>
+    </div>
+  );
 }
 
 export default App;
+
+
+
+// import React from 'react';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route
+// } from "react-router-dom";
+
+// import NavBar from './components/NavBar';
+// import Login from './components/Login';
+// import SignUp from './components/Register';
+// import CreateGoals from './components/CreateGoalsForm';
+// import NagTracker from './components/NagTracker';
+
+// import './App.css';
+
+
+
+// function App() {
+//   return (
+//     <Router>
+//          <div>
+//             <NavBar />
+//           </div>
+//         <Switch>
+//           <Route path="/login">
+//             <Login />
+//           </Route>
+//           <Route path="/register">
+//             <SignUp />
+//           </Route>
+//           <Route path="/goals/new">
+//             <CreateGoals />
+//           </Route>
+//           <Route path="/nags">
+//             <NagTracker />
+//           </Route>
+//         </Switch>
+//     </Router>
+//   )
+// }
+
+// export default App;
 
 // OLD REACT ROUTER ROUTES
 // function App() {
