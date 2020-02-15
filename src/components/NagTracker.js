@@ -21,9 +21,9 @@ import FloatingActionButtons from './FloatingButtonToCreateNew';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  position: sticky;
+  position: fixed;
   opacity: 0.8;
-  margin-top: 40;
+  margin-top: 40px;
   margin-left: 20px;
   margin-right: auto;
 `;
