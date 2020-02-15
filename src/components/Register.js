@@ -9,7 +9,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
+import PersonAdd from '@material-ui/icons/PersonAdd';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -67,7 +67,7 @@ export default function SignUp() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <DirectionsWalkIcon />
+            <PersonAdd />
           </Avatar>
           <Typography component="h1" variant="h5">
             Register
