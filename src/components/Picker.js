@@ -35,7 +35,7 @@ export default function MaterialUIPickers() {
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
-          label="Please select completion date"
+          label="Please select completion date:"
           format="MM/dd/yyyy"
           value={selectedDate}
           onChange={handleDateChange}
@@ -46,7 +46,7 @@ export default function MaterialUIPickers() {
         <KeyboardTimePicker
           margin="normal"
           id="time-picker"
-          label="Please select completion time"
+          label="Please select completion time:"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
