@@ -4,6 +4,8 @@ import React from "react";
 import NavBar from "./components/NavBar";
 import { useAuth0 } from "./react-auth0-spa";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateGoals from './components/CreateGoalsForm';
+import NagTracker from './components/NagTracker';
 
 // src/App.js
 
@@ -30,6 +32,8 @@ function App() {
         <Switch>
           <Route path="/" exact />
           <PrivateRoute path="/profile" component={Profile} />
+          <PrivateRoute path="/goals"component={CreateGoals} />
+          <PrivateRoute path="/nags"component={NagTracker} />
         </Switch>
       </Router>
     </div>
@@ -51,7 +55,7 @@ export default App;
 // import Login from './components/Login';
 // import SignUp from './components/Register';
 // import CreateGoals from './components/CreateGoalsForm';
-// import NagTracker from './components/NagTracker';
+
 
 // import './App.css';
 
