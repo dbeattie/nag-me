@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import MaterialUIPickers from './Picker';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,8 +31,7 @@ export default function CreateGoals() {
       <h2>Frequency</h2>
       {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
       <h2>Completion Date</h2>
-      {/* Insert Calendar function for date picker - might need to create a new component */}
-      <h3>Date Picker</h3>
+      <MaterialUIPickers />
     </div>
   );
 }
