@@ -1,16 +1,19 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/Register';
+import CreateGoals from './components/CreateGoalsForm';
+import NagTracker from './components/NagTracker';
+
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import CreateGoals from './components/CreateGoalsForm'
+
+
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           </Route>
           <Route path="/goals/new">
             <CreateGoals />
+          </Route>
+          <Route path="/nags">
+            <NagTracker />
           </Route>
         </Switch>
     </Router>
