@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import FloatingActionButtons from './FloatingButtonToCreateNew';
 
 function createData(name, date) {
   return { name, date };
@@ -319,6 +320,9 @@ export default function NagTracker() {
           </Table>
         </TableContainer>
       </Paper>
+      <div class="fabButton">
+        <FloatingActionButtons />
+      </div>
     </div>
   );
 }
