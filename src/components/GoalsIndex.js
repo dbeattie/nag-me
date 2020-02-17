@@ -39,14 +39,6 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  //function gets the right data output but I can't pass it into the table...
-  //It's an async issue that I think needs to be resolved with useEffect
-  
-const initialRows = [
-  { name: 'Mehmet', end_date: 'Baran'},
-  { name: 'Zerya', end_date: 'Baran'}
-];
-
 export default function GoalsIndex() {
 
   const columns = [
