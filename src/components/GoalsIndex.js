@@ -39,82 +39,64 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  // function useFetch(url, defaultData) {
-  //   const [data, updateData] = useState(defaultData)
-
-  //   useEffect(async () => {
-  //       if (!url) {
-  //           updateData(defaultData)
-  //           return
-  //       }
-  //       const resp = await fetch(url)
-  //       const json = await resp.json()
-  //       updateData(json)
-  //   }, [url])
-
-  //   return data
-  // }
-  
-  
-  
-  function queryGoals(id) {
-
-    return axios.get("http://localhost:8001/api/goals")
-    .then((goals) => {
-      //Convert Object of Objects into an Array of Objects
-      const goalArr = Object.keys(goals.data).map(goal => {
-        return goals.data[goal]
-      });
-
-      //Filter that Array by User_id and deletes data we don't want/need
-      const filteredGoals = goalArr.filter(obj => {
-        if (obj.user_id === id) {
-          delete obj.id
-          delete obj.user_id
-          delete obj.start_date
-          delete obj.cron
-          return obj
-        } else return null
-      });
-      return filteredGoals;
-    }).catch(Error);
-  };
-
   //function gets the right data output but I can't pass it into the table...
   //It's an async issue that I think needs to be resolved with useEffect
-  const testTableData = queryGoals(2);
   
-
-
+const initialRows = [
+  { name: 'Mehmet', end_date: 'Baran'},
+  { name: 'Zerya', end_date: 'Baran'}
+];
 
 export default function GoalsIndex() {
-  
-  console.log(testTableData)
 
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'End Date', field: 'end_date', type: 'numeric'},
-    ],
-    data: [
-      { name: 'Mehmet', end_date: 'Baran'},
-      { name: 'Zerya', end_date: 'Baran'}
-    ]
-  });
+  const columns = [
+    { title: 'Name', field: 'name' },
+    { title: 'End Date', field: 'end_date', type: 'numeric'},
+  ];
+
+  const [rows, setRows] = React.useState([]);
+
+  const fetchData = () => {
+    axios.get("http://localhost:8001/api/goals")
+      .then((goals) => {
+        //Convert Object of Objects into an Array of Objects
+        const goalArr = Object.keys(goals.data).map(goal => {
+          return goals.data[goal]
+        });
+
+        //Filter that Array by User_id and deletes data we don't want/need
+        const filteredGoals = goalArr.filter(obj => {
+          if (obj.user_id === 2) {
+            delete obj.id
+            delete obj.user_id
+            delete obj.start_date
+            delete obj.cron
+            return obj
+          } else return null
+        });
+        console.log({ filteredGoals });
+        setRows(filteredGoals);
+        return filteredGoals;
+      }).catch(err => console.error(err));
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
 
   return (
-    <div style={{ maxWidth: "100%" }}>
+    <div style={{ maxwidth: "100%" }}>
       <MaterialTable
         icons={tableIcons}
         title="Goals"
-        columns={state.columns}
-        data={state.data}
+        columns={columns}
+        data={rows}
         editable={{
           onRowAdd: newData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
+                setRows(prevState => {
                   const data = [...prevState.data];
                   data.push(newData);
                   return { ...prevState, data };
@@ -126,7 +108,7 @@ export default function GoalsIndex() {
               setTimeout(() => {
                 resolve();
                 if (oldData) {
-                  setState(prevState => {
+                  setRows(prevState => {
                     const data = [...prevState.data];
                     data[data.indexOf(oldData)] = newData;
                     return { ...prevState, data };
@@ -138,7 +120,7 @@ export default function GoalsIndex() {
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
+                setRows(prevState => {
                   const data = [...prevState.data];
                   data.splice(data.indexOf(oldData), 1);
                   return { ...prevState, data };
