@@ -10,32 +10,36 @@ import Login from './components/Login';
 import SignUp from './components/Register';
 import CreateGoals from './components/CreateGoalsForm';
 import NagTracker from './components/NagTracker';
+import Video from './components/Video';
 
 import './App.css';
 
-
-
 function App() {
   return (
+    
     <Router>
-         <div>
-            <NavBar />
-          </div>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <SignUp />
-          </Route>
-          <Route path="/goals/new">
-            <CreateGoals />
-          </Route>
-          <Route path="/nags">
-            <NagTracker />
-          </Route>
-        </Switch>
+      <div>
+        <NavBar />
+      </div>
+      <Switch>
+        <Route path="/home">
+          <Video />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <SignUp />
+        </Route>
+        <Route path="/goals/new">
+          <CreateGoals />
+        </Route>
+        <Route path="/nags">
+          <NagTracker />
+        </Route>
+      </Switch>
     </Router>
+    
   )
 }
 
