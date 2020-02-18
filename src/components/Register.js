@@ -19,8 +19,8 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://www.lighthouselabs.ca/">
-        Lighthouse Labs
-      </Link>{" "}
+        Darren Don & Kevin
+      </Link>{' '}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -158,14 +158,6 @@ export default function SignUp() {
                   id="password"
                   autoComplete="current-password"
                   onChange={event => setPassword(event.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
