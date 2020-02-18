@@ -71,12 +71,12 @@ export default function SignUp() {
     
     const newUser = {
       name: name.trim(),
-      email: email,
+      email: email.trim().toLowerCase(),
       password: password
     }
 
     axios
-      .post("http://localhost:8001/api/register", newUser)
+      .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
       .then(res => {
         console.log(res);
         if (res.status === 200) {
