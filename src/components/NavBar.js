@@ -1,9 +1,5 @@
 import React from 'react';
-import {  
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import axios from "axios";
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +24,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavBar() {
   const classes = useStyles();
+  // const [homePage, setHomePage] = useState(false);
 
+  const logout = () => {
+    axios.post('http://localhost:8001/api/logout', null, { withCredentials: true })
+      .then((response) => {
+        console.log(response);
+        // setHomePage(true);
+      })
+  } 
+
+  // return !homePage ? (
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -41,7 +48,8 @@ export default function NavBar() {
           <Button component= {Link} to="/goals" color="inherit">Goals</Button>
           <Button component= {Link} to="/nags" color="inherit">Nags</Button>
           <Button component= {Link} to="/login" color="inherit">Login</Button>
-          <Button component= {Link} to="/register" color="inherit">Register</Button>
+          {/* <Button component= {Link} to="/register" color="inherit">Register</Button> */}
+          <Button onClick={logout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
