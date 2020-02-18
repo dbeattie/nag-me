@@ -70,12 +70,12 @@ export default function Login(props) {
 
   const handleSubmit = () => {
     const authUser = {
-      email: email,
+      email: email.trim().toLowerCase(),
       password: password
     }
     
     axios
-      .post("http://localhost:8001/api/authenticate", authUser)
+      .post("http://localhost:8001/api/authenticate", authUser, {withCredentials: true})
       .then(res => {
         console.log(res)
         if (res.status === 200) {
@@ -87,18 +87,10 @@ export default function Login(props) {
         }
       })
       .catch(err => {
-        console.error(err);
+        console.error("Error logging in please try again", err);
         alert("Error logging in please try again");
       });
   };
-  
-  // const handlePasswordChange = () => {
-  //   setAuth(password);
-  // };
-
-  // const handleEmailChange = () => {
-  //   setAuth(email.onSave(email));
-  // };
 
   return (
     <Grid container component="main" className={classes.root}>
