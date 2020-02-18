@@ -17,6 +17,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import FloatingActionButtons from './FloatingButtonToCreateNew';
+
+// const Wrapper = styled.div`
+//   position: fixed;
+//   opacity: 0.8;
+//   margin-top: 40px;
+//   margin-left: 20px;
+//   margin-right: auto;
+// `;
 
 function createData(name, date) {
   return { name, date };
@@ -319,6 +328,7 @@ export default function NagTracker() {
           </Table>
         </TableContainer>
       </Paper>
+      <FloatingActionButtons />
     </div>
   );
 }
