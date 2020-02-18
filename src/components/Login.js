@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://www.lighthouselabs.ca/">
-        Lighthouse Labs
+        Darren Don & Kevin
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
