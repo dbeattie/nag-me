@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -19,26 +20,28 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FloatingActionButtons from './FloatingButtonToCreateNew';
 
-// const Wrapper = styled.div`
-//   position: fixed;
-//   opacity: 0.8;
-//   margin-top: 40px;
-//   margin-left: 20px;
-//   margin-right: auto;
-// `;
 
-function createData(name, date) {
-  return { name, date };
-}
+//Below is the style for "+" FAB button
+const Wrapper = styled.div`
+  position: fixed;
+  opacity: 0.8;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: auto;
+`;
 
-const rows = [
-  createData('Cupcake', 305),
-  createData('Donut', 452),
-  createData('Eclair', 262),
-  createData('Frozen yoghurt', 159),
-  createData('Gingerbread', 356),
-  createData('Honeycomb', 408)
-];
+// function createData(name, date) {
+//   return { name, date };
+// }
+
+// const rows = [
+//   createData('Cupcake', 305),
+//   createData('Donut', 452),
+//   createData('Eclair', 262),
+//   createData('Frozen yoghurt', 159),
+//   createData('Gingerbread', 356),
+//   createData('Honeycomb', 408)
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -220,6 +223,31 @@ export default function NagTracker() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [nags, setNags] = React.useState([]);
+  
+  //Get data from nags table from database
+  const fetchNags = () => {
+    axios.get("http://localhost:8001/api/nags")
+    .then((results) => {
+      const nagArray = Object.keys(results.data).map(nag => {
+        return results.data[nag];
+      });
+      console.log(nagArray);
+      const filterNags = nagArray.filter(obj => {
+        if (obj.goal_id === 2) {
+          return obj
+        } else return null;
+      });
+      console.log(filterNags);
+      setNags(filterNags);
+      return filterNags;
+    })
+    .catch(err => console.error(err));
+  }
+
+  React.useEffect(() => {
+    fetchNags();
+  }, [])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -229,7 +257,7 @@ export default function NagTracker() {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name);
+      const newSelecteds = nags.map(n => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -267,7 +295,7 @@ export default function NagTracker() {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, nags.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -287,23 +315,23 @@ export default function NagTracker() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={nags.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(nags, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.name+index);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
+                      onClick={event => handleClick(event, row.name+index)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.name+index}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -313,7 +341,7 @@ export default function NagTracker() {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.name+index}
                       </TableCell>
                       <TableCell align="right">{row.date}</TableCell>
                     </TableRow>
