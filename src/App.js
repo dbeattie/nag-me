@@ -35,11 +35,11 @@ function App() {
         <Route path="/register">
           <SignUp />
         </Route>
-        <Route path="/goals">
-            <GoalsIndex />
-        </Route>
         <Route path="/goals/new">
           <CreateGoals />
+        </Route>
+        <Route path="/goals">
+            <GoalsIndex />
         </Route>
         <Route path="/nags">
           <NagTracker />
