@@ -19,7 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FloatingActionButtons from './FloatingButtonToCreateNew';
-import styled from 'styled-components';
+
 
 //Below is the style for "+" FAB button
 const Wrapper = styled.div`
@@ -356,9 +356,7 @@ export default function NagTracker() {
           </Table>
         </TableContainer>
       </Paper>
-      <Wrapper>
-        <FloatingActionButtons />
-      </Wrapper>
+      <FloatingActionButtons />
     </div>
   );
 }
