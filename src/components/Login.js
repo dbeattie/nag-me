@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -62,16 +62,25 @@ export default function Login(props) {
 
   const classes = useStyles();
 
-  // const [auth, setAuth] = useState({ email: "", password: "" });
+  // const [auth, setAuth] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // useEffect(() => {
+  //   axios.get('/auth', { withCredentials: true })
+  //     .then((response) => {
+  //       if (response.data.result === "user") {
+  //         setAuth(true)
+  //       }
+  //     });
+  // }, [])
 
   const handleSubmit = () => {
     const authUser = {
       email: email,
       password: password
     }
-    
+    console.log(authUser);
     axios
       .post("http://localhost:8001/api/login", authUser, {withCredentials: true})
       .then(res => {

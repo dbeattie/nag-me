@@ -1,9 +1,11 @@
-import React from 'react';
+// import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route, 
+  Redirect
 } from "react-router-dom";
+import axios from "axios";
 // import { PrivateRoute } from "./helpers/PrivateRoute"
 
 import NavBar from './components/NavBar';
@@ -16,20 +18,45 @@ import Video from './components/Video';
 
 import './App.css';
 
-// const Router = () => (
-//   <Switch>
-//     <Route exact path="/" component={Home} />
-//     <PrivateRoute path="/dashboard" component={Dashboard} />
-//     <Route component={NotFound} />
-//   </Switch>
-// );
+import React, { useEffect, Component } from "react";
+
+const checkAuth = () => {
+  axios.get('/auth', { withCredentials: true })
+    .then((response) => {
+      if (response.data.result === "user") {
+        return true
+      } else return false
+    });
+};
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      checkAuth() === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: props.location }
+          }}
+        />
+      )
+    }
+  />
+);
 
 /*A <Switch> looks through all its children <Route> elements and renders the first one whose path matches the current URL. Use a <Switch> any time
 you have multiple routes, but you want only one of them to render at a time*/
 
-function App() {
+function App(props) {
+  
+  useEffect(() => {
+    checkAuth();
+  }, [])  
+
   return (
-    
     <Router>
       <div>
         <NavBar />
@@ -44,15 +71,15 @@ function App() {
         <Route path="/register">
           <SignUp />
         </Route>
-        <Route path="/goals/new">
+        <PrivateRoute path="/goals/new">
           <CreateGoals />
-        </Route>
-        <Route path="/goals">
+        </PrivateRoute>
+        <PrivateRoute path="/goals">
             <GoalsIndex />
-        </Route>
-        <Route path="/nags">
+        </PrivateRoute>
+        <PrivateRoute path="/nags">
           <NagTracker />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </Router>
     

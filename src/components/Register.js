@@ -77,7 +77,7 @@ export default function SignUp() {
       phone_number: phone
     }
     console.log(newUser);
-    debugger
+  
     axios
       .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
       .then(res => {
