@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,6 +12,7 @@ import Person from "@material-ui/icons/Person";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import AuthContext from '../helpers/AuthContext';
 
 function Copyright() {
   return (
@@ -60,21 +62,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login(props) {
 
+  // console.log("PROPS.LOCATION:", props.location)
   const classes = useStyles();
 
-  // const [auth, setAuth] = useState(false);
+  const {auth, setAuth} = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // useEffect(() => {
-  //   axios.get('/auth', { withCredentials: true })
+  //   axios.get('http://localhost:8001/api/auth', { withCredentials: true })
   //     .then((response) => {
-  //       if (response.data.result === "user") {
+  //       if (response.data.result === "true") {
   //         setAuth(true)
-  //       }
+  //       } 
   //     });
   // }, [])
-
+  
   const handleSubmit = () => {
     const authUser = {
       email: email,
@@ -86,7 +89,7 @@ export default function Login(props) {
       .then(res => {
         console.log(res)
         if (res.status === 200) {
-          // set userlogin state and then update below
+          setAuth(true)// set userlogin state and then update below
           // setAuth({})
         } else {
           const error = new Error(res.error);
@@ -98,81 +101,80 @@ export default function Login(props) {
         alert("Error logging in please try again");
       });
   };
-
-  return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <Person />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={event => event.preventDefault()}
-            // onSubmit={this.handleSubmit}
-          >
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={event => setEmail(event.target.value)}
-              // onChange={this.handleEmailChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={event => setPassword(event.target.value)}
-              // onChange={this.handlePasswordChange}
-
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={()=>handleSubmit()} 
+  
+  if (!auth) {
+    return (
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <Person />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Login
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={event => event.preventDefault()}
+              // onSubmit={this.handleSubmit}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={event => setEmail(event.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={event => setPassword(event.target.value)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={()=>handleSubmit()} 
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                {/* <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid> */}
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
+              <Box mt={5}>
+                <Copyright />
+              </Box>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  } else return (<Redirect to="/goals" />); 
 }
+ 

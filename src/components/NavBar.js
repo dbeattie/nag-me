@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -22,6 +22,7 @@ import Loop from '@material-ui/icons/Loop';
 import Person from '@material-ui/icons/Person';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import AuthContext from '../helpers/AuthContext';
 
 import axios from "axios";
 
@@ -83,15 +84,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const checkAuth = () => {
+  return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
+    .then((response) => {
+      if (response.data.result === "true") {
+        return true
+      } else return false
+    });
+};
+
 export default function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  // const [homePage, setHomePage] = useState(false);
+  const [auth, setAuth] = useState(false);
 
-  // Need to manipulate state to make login/register visible when not logged in
-  // Make logout visible only when logged in
-  // const [homePage, setHomePage] = useState(false);
+  useEffect(() => {
+    checkAuth().then(setAuth)
+  }, [])  
 
   const handleDrawerOpen = () => {
     setOpen(true);

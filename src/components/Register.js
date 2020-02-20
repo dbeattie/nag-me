@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -67,6 +66,16 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [auth, setAuth] = useState(false);
+
+  useEffect(() => {
+    axios.get('http://localhost:8001/api/auth', { withCredentials: true })
+      .then((response) => {
+        if (response.data.result === "true") {
+          setAuth(true)
+        } 
+      });
+  }, [])
 
   const handleSubmit = () => {
     
@@ -77,13 +86,13 @@ export default function SignUp() {
       phone_number: phone
     }
     console.log(newUser);
-  
+
     axios
       .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
       .then(res => {
         console.log(res);
         if (res.status === 200) {
-          // set userlogin state and then update below
+          setAuth(true)
           // setAuth({})
         } else {
           const error = new Error(res.error);
@@ -96,8 +105,9 @@ export default function SignUp() {
       });
   };
 
-  return (
-    <Grid container component="main" className={classes.root} maxwidth="xs">
+  if (!auth) {
+    return (
+      <Grid container component="main" className={classes.root} maxwidth="xs">
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -112,7 +122,7 @@ export default function SignUp() {
             className={classes.form}
             noValidate
             onSubmit={event => event.preventDefault()}
-          >
+            >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -125,7 +135,7 @@ export default function SignUp() {
                   label="User Name"
                   autoFocus
                   onChange={event => setName(event.target.value)}
-                />
+                  />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -138,7 +148,7 @@ export default function SignUp() {
                   label="Phone Number"
                   type="tel"
                   onChange={event => setPhone(event.target.value)}
-                />
+                  />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -151,7 +161,7 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   onChange={event => setEmail(event.target.value)}
-                />
+                  />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -164,7 +174,7 @@ export default function SignUp() {
                   id="password"
                   label="Password"
                   onChange={event => setPassword(event.target.value)}
-                />
+                  />
               </Grid>
             </Grid>
             <Button
@@ -174,7 +184,7 @@ export default function SignUp() {
               color="primary"
               className={classes.submit}
               onClick={() => handleSubmit()}
-            >
+              >
               Sign Up
             </Button>
             <Grid container justify="flex-end">
@@ -187,9 +197,10 @@ export default function SignUp() {
             <Box mt={5}>
               <Copyright />
             </Box>
-          </form>
-        </div>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  } else return (<Redirect to="/goals" />); 
 }
