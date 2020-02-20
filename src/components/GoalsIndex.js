@@ -20,6 +20,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FloatingActionButton from './CreateNewFloatingButton';
 import CreateGoals from './CreateGoalsForm';
+import OutlinedCard from './Card'
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -49,6 +50,7 @@ export default function GoalsIndex() {
   ];
 
   const [rows, setRows] = React.useState([]);
+  const [card, setCard] = React.useState([]);
 
   const fetchData = () => {
     axios.get("http://localhost:8001/api/goals")
@@ -60,7 +62,7 @@ export default function GoalsIndex() {
 
         //Filter that Array by User_id and deletes data we don't want/need
         const filteredGoals = goalArr.filter(obj => {
-          if (obj.user_id === 2) {
+          if (obj.user_id === 2 || obj.user_id === 1) {
             delete obj.id
             delete obj.user_id
             delete obj.start_date
@@ -69,61 +71,95 @@ export default function GoalsIndex() {
           } else return null
         });
         console.log({ filteredGoals });
-        setRows(filteredGoals);
-        return filteredGoals;
+        console.log(filteredGoals);   
+        setCard(filteredGoals);
+       
       }).catch(err => console.error(err));
   }
 
   useEffect(() => {
     fetchData();
   }, [])
+  console.log('hello', card)
 
-  return (
-    <div style={{ maxwidth: "100%" }}>
-      <MaterialTable
-        icons={tableIcons}
-        title="Goals"
-        columns={columns}
-        data={rows}
-        editable={{
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                setRows(prevState => {
-                  const data = [...prevState.data];
-                  data.push(newData);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            }),
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setRows(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                setRows(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            }),
-        }}
+  
+   return card.map(goal => (
+      <OutlinedCard
+        key={goal.key}
+        name={goal.goal_name}
+        endDate={goal.end_date}
+        friend1={goal.friend_1_phone_number}
+        friend2={goal.friend_2_phone_number}
       />
-      <FloatingActionButton />
-    </div>
-  );
+    ))
+
+  // const temp = card.map((goal) => {
+  //   return (
+  //     <OutlinedCard
+  //     key={goal.key}
+  //     name={goal.goal_name}
+  //     endDate={goal.end_date}
+  //     friend1={goal.friend_1_phone_number}
+  //     friend2={goal.friend_2_phone_number}
+  //     />
+  //   )
+  // });
+  // return temp;
+  
+
+
+
+  // return (
+  //   <div>
+  //     <OutlinedCard
+  //        />
+  //   </div>
+
+    // <div style={{ maxwidth: "100%" }}>
+    //   <MaterialTable
+    //     icons={tableIcons}
+    //     title="Goals"
+    //     columns={columns}
+    //     data={rows}
+    //     editable={{
+    //       onRowAdd: newData =>
+    //         new Promise(resolve => {
+    //           setTimeout(() => {
+    //             resolve();
+    //             setRows(prevState => {
+    //               const data = [...prevState.data];
+    //               data.push(newData);
+    //               return { ...prevState, data };
+    //             });
+    //           }, 600);
+    //         }),
+    //       onRowUpdate: (newData, oldData) =>
+    //         new Promise(resolve => {
+    //           setTimeout(() => {
+    //             resolve();
+    //             if (oldData) {
+    //               setRows(prevState => {
+    //                 const data = [...prevState.data];
+    //                 data[data.indexOf(oldData)] = newData;
+    //                 return { ...prevState, data };
+    //               });
+    //             }
+    //           }, 600);
+    //         }),
+    //       onRowDelete: oldData =>
+    //         new Promise(resolve => {
+    //           setTimeout(() => {
+    //             resolve();
+    //             setRows(prevState => {
+    //               const data = [...prevState.data];
+    //               data.splice(data.indexOf(oldData), 1);
+    //               return { ...prevState, data };
+    //             });
+    //           }, 600);
+    //         }),
+    //     }}
+    //   />
+    //   <FloatingActionButton />
+    // </div>
+// );
 }
