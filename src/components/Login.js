@@ -68,12 +68,12 @@ export default function Login(props) {
 
   const handleSubmit = () => {
     const authUser = {
-      email: email.trim().toLowerCase(),
+      email: email,
       password: password
     }
     
     axios
-      .post("http://localhost:8001/api/authenticate", authUser, {withCredentials: true})
+      .post("http://localhost:8001/api/login", authUser, {withCredentials: true})
       .then(res => {
         console.log(res)
         if (res.status === 200) {

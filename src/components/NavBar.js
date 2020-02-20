@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -83,10 +83,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  // const [homePage, setHomePage] = useState(false);
 
   // Need to manipulate state to make login/register visible when not logged in
   // Make logout visible only when logged in
@@ -137,6 +138,7 @@ export default function NavBar() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <Toolbar /> 
       <Drawer
         className={classes.drawer}
         variant="persistent"

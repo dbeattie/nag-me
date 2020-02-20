@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+// import { PrivateRoute } from "./helpers/PrivateRoute"
 
 import NavBar from './components/NavBar';
 import Login from './components/Login';
@@ -14,6 +15,14 @@ import GoalsIndex from './components/GoalsIndex';
 import Video from './components/Video';
 
 import './App.css';
+
+// const Router = () => (
+//   <Switch>
+//     <Route exact path="/" component={Home} />
+//     <PrivateRoute path="/dashboard" component={Dashboard} />
+//     <Route component={NotFound} />
+//   </Switch>
+// );
 
 /*A <Switch> looks through all its children <Route> elements and renders the first one whose path matches the current URL. Use a <Switch> any time
 you have multiple routes, but you want only one of them to render at a time*/

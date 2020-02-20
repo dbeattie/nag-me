@@ -66,15 +66,18 @@ export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleSubmit = () => {
     
     const newUser = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
-      password: password
+      password: password,
+      phone_number: phone
     }
-
+    console.log(newUser);
+    debugger
     axios
       .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
       .then(res => {
@@ -124,39 +127,42 @@ export default function SignUp() {
                   onChange={event => setName(event.target.value)}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
+                  autoComplete="phone_num"
+                  name="phone_num"
                   variant="outlined"
                   required
                   fullWidth
+                  id="phone_num"
+                  label="Phone Number"
+                  type="tel"
+                  onChange={event => setPhone(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="email"
+                  variant="outlined"
+                  name="email"
+                  required
+                  fullWidth
+                  type="email"
                   id="email"
                   label="Email Address"
-                  name="email"
-                  autoComplete="email"
                   onChange={event => setEmail(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  autoComplete="current-password"
                   variant="outlined"
                   required
                   fullWidth
                   name="password"
-                  label="Password"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
+                  label="Password"
                   onChange={event => setPassword(event.target.value)}
                 />
               </Grid>
