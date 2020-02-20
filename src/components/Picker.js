@@ -8,12 +8,13 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-export default function MaterialUIPickers() {
+export default function MaterialUIPickers(props) {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(new Date().getTime());
 
   const handleDateChange = date => {
     setSelectedDate(date);
+    props.updateDate(date);
   };
 
   return (
@@ -43,16 +44,16 @@ export default function MaterialUIPickers() {
             'aria-label': 'change date',
           }}
         />
-        <KeyboardTimePicker
+        {/* <KeyboardTimePicker                 comment time picker (stretch) for now
           margin="normal"
           id="time-picker"
           label="Please select completion time:"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change time',
+            'aria-label': 'change time', 
           }}
-        />
+        /> */}
       </Grid>
     </MuiPickersUtilsProvider>
   );
