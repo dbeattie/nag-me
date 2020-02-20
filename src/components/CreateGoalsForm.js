@@ -18,10 +18,11 @@ export default function CreateGoals() {
   const classes = useStyles();
   const [goal, setGoal] = React.useState("");
   const [nag, setNag] = React.useState("");
-  const [startdate, setStartdate] = React.useState(new Date());
   const [enddate, setEnddate] = React.useState('');
   const [phone1, setPhone1] = React.useState('');
   const [phone2, setPhone2] = React.useState('');
+
+  const startdate =new Date();
 
   const submitMe = (e) => {
     e.preventDefault();
@@ -29,15 +30,7 @@ export default function CreateGoals() {
     .then(res => {
       console.log(res);
       console.log(res.data);
-
-      // axios.put('http://localhost:8001/api/nags/new', { nag, nagCounts })
-      // .then(res => {
-      //   console.log(res);
-      //   console.log(res.data);
-      // })
     })
-
-    
   }
 
   return (
