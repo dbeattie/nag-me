@@ -206,6 +206,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NagTracker() {
+  
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('date');

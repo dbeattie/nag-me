@@ -1,7 +1,7 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 import axios from "axios";
-import { useState, useEffect, forwardRef } from 'react';
+import { useEffect, forwardRef } from 'react';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -20,7 +20,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FloatingActionButton from './CreateNewFloatingButton';
 import CreateGoals from './CreateGoalsForm';
-import OutlinedCard from './Card'
+import OutlinedCard from './Card';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -41,6 +41,7 @@ const tableIcons = {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
+
 
 export default function GoalsIndex() {
 
