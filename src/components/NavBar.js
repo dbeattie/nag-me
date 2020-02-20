@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -84,24 +84,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const checkAuth = () => {
-  return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
-    .then((response) => {
-      if (response.data.result === "true") {
-        return true
-      } else return false
-    });
-};
+// const checkAuth = () => {
+//   return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
+//     .then((response) => {
+//       if (response.data.result === "true") {
+//         return true
+//       } else return false
+//     });
+// };
+
+// Simplify the logic of the return here??
+// const NavDrawerStructure = 
 
 export default function NavBar(props) {
+  
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [auth, setAuth] = useState(false);
-
-  useEffect(() => {
-    checkAuth().then(setAuth)
-  }, [])  
+  const {auth, setAuth} = useContext(AuthContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -120,89 +120,136 @@ export default function NavBar(props) {
         axios.post('http://localhost:8001/api/logout', null, { withCredentials: true })
           .then((response) => {
             console.log(response);
-            // setHomePage(true);
+            setAuth(false);
           })
       } 
-
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap className={classes.title}>
-            Nag.me<Loop />
-          </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            className={clsx(open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Toolbar /> 
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="right"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem component= {Link} to="/goals" onClick={handleDrawerClose}>
-            <ListItemIcon>
-              <EmojiEvents />
-            </ListItemIcon>
-            <ListItemText primary="Goals"/>
-          </ListItem>
-          <ListItem component= {Link} to="/nags" onClick={handleDrawerClose}>
-            <ListItemIcon>
-              <LibraryAddCheckIcon />
-            </ListItemIcon>
-            <ListItemText primary="Nags"/>
-          </ListItem>
-          <ListItem component= {Link} to="/login" onClick={handleDrawerClose}>
-            <ListItemIcon>
-              <Person />
-            </ListItemIcon>
-            <ListItemText primary="Login"/>
-          </ListItem>
-          <ListItem component= {Link} to="/register" onClick={handleDrawerClose}>
-            <ListItemIcon>
-              <PersonAdd />
-            </ListItemIcon>
-            <ListItemText primary="Register"/>
-          </ListItem>
-          <ListItem onClick={logoutCloseDrawer}>
-            <ListItemIcon>
-              <ExitToApp />
-            </ListItemIcon>
-            <ListItemText primary="Logout"/>
-          </ListItem>
-          {/* TRY TO SIMPLIFY THE LOGIC WITH A MAP LIKE THIS: {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <ExitToApp /> : <PersonAdd />}</ListItemIcon>
-              <ListItemText primary={text} />
+  if (!auth) {
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+          <Toolbar>
+            <Typography variant="h6" noWrap className={classes.title}>
+              Nag.me<Loop />
+            </Typography>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerOpen}
+              className={clsx(open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Toolbar /> 
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="right"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem component= {Link} to="/login" onClick={handleDrawerClose}>
+              <ListItemIcon>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="Login"/>
             </ListItem>
-          ))} */}
-        </List>
-      </Drawer>
-    </div>
-  );
-}
+            <ListItem component= {Link} to="/register" onClick={handleDrawerClose}>
+              <ListItemIcon>
+                <PersonAdd />
+              </ListItemIcon>
+              <ListItemText primary="Register"/>
+            </ListItem>
+            {/* TRY TO SIMPLIFY THE LOGIC WITH A MAP LIKE THIS: {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>{index % 2 === 0 ? <ExitToApp /> : <PersonAdd />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))} */}
+          </List>
+        </Drawer>
+      </div>
+    );
+  } else {
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+          <Toolbar>
+            <Typography variant="h6" noWrap className={classes.title}>
+              Nag.me<Loop />
+            </Typography>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerOpen}
+              className={clsx(open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Toolbar /> 
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="right"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem component= {Link} to="/goals" onClick={handleDrawerClose}>
+              <ListItemIcon>
+                <EmojiEvents />
+              </ListItemIcon>
+              <ListItemText primary="Goals"/>
+            </ListItem>
+            <ListItem component= {Link} to="/nags" onClick={handleDrawerClose}>
+              <ListItemIcon>
+                <LibraryAddCheckIcon />
+              </ListItemIcon>
+              <ListItemText primary="Nags"/>
+            </ListItem>
+            <ListItem onClick={logoutCloseDrawer}>
+              <ListItemIcon>
+                <ExitToApp />
+              </ListItemIcon>
+              <ListItemText primary="Logout"/>
+            </ListItem>
+          </List>
+        </Drawer>
+      </div>
+    );
+  };
+};

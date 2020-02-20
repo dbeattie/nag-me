@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -12,6 +12,7 @@ import PersonAdd from "@material-ui/icons/PersonAdd";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import AuthContext from '../helpers/AuthContext';
 
 function Copyright() {
   return (
@@ -66,16 +67,16 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
-  const [auth, setAuth] = useState(false);
-
-  useEffect(() => {
-    axios.get('http://localhost:8001/api/auth', { withCredentials: true })
-      .then((response) => {
-        if (response.data.result === "true") {
-          setAuth(true)
-        } 
-      });
-  }, [])
+  const {auth, setAuth} = useContext(AuthContext);
+  
+  // useEffect(() => {
+  //   axios.get('http://localhost:8001/api/auth', { withCredentials: true })
+  //     .then((response) => {
+  //       if (response.data.result === "true") {
+  //         setAuth(true)
+  //       } 
+  //     });
+  // }, [])
 
   const handleSubmit = () => {
     

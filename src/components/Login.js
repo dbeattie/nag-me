@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -62,29 +62,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login(props) {
 
-  // console.log("PROPS.LOCATION:", props.location)
   const classes = useStyles();
 
   const {auth, setAuth} = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:8001/api/auth', { withCredentials: true })
-  //     .then((response) => {
-  //       if (response.data.result === "true") {
-  //         setAuth(true)
-  //       } 
-  //     });
-  // }, [])
   
   const handleSubmit = () => {
     const authUser = {
       email: email,
       password: password
     }
-    console.log(authUser);
-    axios
+
+    return axios
       .post("http://localhost:8001/api/login", authUser, {withCredentials: true})
       .then(res => {
         console.log(res)

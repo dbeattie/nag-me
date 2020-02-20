@@ -1,7 +1,7 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 import axios from "axios";
-import { useState, useContext, useEffect, forwardRef } from 'react';
+import { useEffect, forwardRef } from 'react';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -19,7 +19,6 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FloatingActionButton from './CreateNewFloatingButton';
-// import AuthContext from './components/AuthContext';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
