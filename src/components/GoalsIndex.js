@@ -34,15 +34,17 @@ export default function GoalsIndex() {
   }, [])
 
 
-  const deleteMe = (id) => {
+  const deleteGoal = (id) => {
     axios.put('http://localhost:8001/api/goals/delete', { id })
-    .then(res => {
-      console.log("I am res.data:", res.data);
-      fetchData();
-    })
+      .then(res => {
+        console.log("I am res.data:", res.data);
+        fetchData();
+      })
   }
-  console.log("this is card", card);
-    return card.map(goal => (
+
+  const goalCards = card.map((goal) => {
+
+    return (
       <OutlinedCard
         key={goal.id}
         id={goal.id}
@@ -50,21 +52,9 @@ export default function GoalsIndex() {
         endDate={goal.end_date}
         friend1={goal.friend_1_phone_number}
         friend2={goal.friend_2_phone_number}
-        delete={deleteMe}
+        delete={deleteGoal}
       />
-    ))
-  
-const goalCards = card.map((goal) => {
-    
-    return (
-       <OutlinedCard
-         key={goal.key}
-         name={goal.goal_name}
-         endDate={goal.end_date}
-         friend1={goal.friend_1_phone_number}
-         friend2={goal.friend_2_phone_number}
-       />
-     );
+    );
   });
 
   return (
@@ -75,5 +65,4 @@ const goalCards = card.map((goal) => {
       <FloatingActionButton />
     </div>
   );
-  
 }
