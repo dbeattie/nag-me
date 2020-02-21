@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from "axios";
 
-// import UserContext from '../helpers/UserContext';
-// const { user } = useContext(UserContext);
-
-import FloatingActionButton from './CreateNewFloatingButton';
+import UserContext from '../helpers/UserContext';
 import NagOutlinedCard from './NagCard';
 
 // //Styling, don't touch
@@ -34,29 +31,42 @@ import NagOutlinedCard from './NagCard';
 
 
 export default function NagTracker() {
-  
- 
+
+  const { user } = useContext(UserContext);
   const [nags, setNags] = React.useState([]);
   
   //Get data from nags table from database
-  const fetchNags = () => {
-    axios.get("http://localhost:8001/api/nags")
-    .then((results) => {
-      const nagArray = Object.keys(results.data).map(nag => {
-        return results.data[nag];
-      });
-      // console.log(nagArray);
-      const filterNags = nagArray.filter(obj => {
-        if (obj.goal_id === 2) {
-          return obj
-        } else return null;
-      });
-      console.log('filtered nags are:',filterNags);
-      setNags(filterNags);
-      // return filterNags;
+  const fetchNags = async () => {
+  
+    const allNags = await axios.get("http://localhost:8001/api/nags");
+
+    const nagArray = Object.keys(allNags.data).map(nag => {
+      return allNags.data[nag];
+    });
+      
+    const allGoals = await axios.get("http://localhost:8001/api/goals");
+
+    const goalArray = Object.keys(allGoals.data).map(goal => {
+      return allGoals.data[goal];
     })
-    .catch(err => console.error(err));
-  }
+
+    //Outputs an array of goals based on the logged in user
+    const goalsPerUser = goalArray.filter(obj => {
+      if (obj.user_id === user) {
+        return obj
+      } else return null;
+    }); 
+
+    //Outputs an array of goal ids
+    const GoalIds = goalsPerUser.map(goal => goal.id)
+  
+    //Filters the nagArray for any goal_id's that match
+    var filteredNags = nagArray.filter(nag => {
+      return GoalIds.includes(nag.goal_id);
+    });
+    
+    setNags(filteredNags);
+  };
 
   React.useEffect(() => {
     fetchNags();
@@ -93,7 +103,6 @@ export default function NagTracker() {
       <section className="goalCards" style={{ maxwidth: "100%" }}>
         {nagCards}
       </section>
-      <FloatingActionButton />
     </div>
   );
 }
