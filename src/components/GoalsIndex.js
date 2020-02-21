@@ -25,7 +25,6 @@ export default function GoalsIndex() {
             return obj
           } else return null
         });
-        console.log(filteredGoals);   
         setCard(filteredGoals);
       }).catch(err => console.error(err));
   }
@@ -33,7 +32,6 @@ export default function GoalsIndex() {
   useEffect(() => {
     fetchData();
   }, [])
-  console.log('hello', card)
 
 
   const deleteMe = (id) => {
