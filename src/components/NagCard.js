@@ -28,7 +28,7 @@ export default function NagOutlinedCard(props) {
            {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Conmplete Nag by: {props.endDate}
+          Complete Nag by: {props.endDate}
         </Typography>
       </CardContent>
       <CardActions>
