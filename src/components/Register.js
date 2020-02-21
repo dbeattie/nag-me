@@ -68,15 +68,6 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const {auth, setAuth} = useContext(AuthContext);
-  
-  // useEffect(() => {
-  //   axios.get('http://localhost:8001/api/auth', { withCredentials: true })
-  //     .then((response) => {
-  //       if (response.data.result === "true") {
-  //         setAuth(true)
-  //       } 
-  //     });
-  // }, [])
 
   const handleSubmit = () => {
     
@@ -86,15 +77,13 @@ export default function SignUp() {
       password: password,
       phone_number: phone
     }
-    console.log(newUser);
 
     axios
       .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
           setAuth(true)
-          // setAuth({})
         } else {
           const error = new Error(res.error);
           throw error;

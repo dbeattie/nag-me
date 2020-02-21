@@ -79,8 +79,7 @@ export default function Login(props) {
       .then(res => {
         console.log(res)
         if (res.status === 200) {
-          setAuth(true)// set userlogin state and then update below
-          // setAuth({})
+          setAuth(true)
         } else {
           const error = new Error(res.error);
           throw error;

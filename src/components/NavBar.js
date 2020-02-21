@@ -119,7 +119,7 @@ export default function NavBar(props) {
   const logout = () => {
         axios.post('http://localhost:8001/api/logout', null, { withCredentials: true })
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             setAuth(false);
           })
       } 
