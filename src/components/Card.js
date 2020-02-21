@@ -34,7 +34,7 @@ export default function OutlinedCard(props) {
         <Button size="small" color="primary">
           Edit
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={() => props.delete(props.id)}>
           Delete
         </Button>
       </CardActions>

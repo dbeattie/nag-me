@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from "axios";
 
 import FloatingActionButton from './CreateNewFloatingButton';
@@ -19,8 +18,7 @@ export default function GoalsIndex() {
 
         //Filter that Array by User_id and deletes data we don't want/need
         const filteredGoals = goalArr.filter(obj => {
-          if (obj.user_id === 2 || obj.user_id === 1) {
-            delete obj.id
+          if (obj.user_id === 2 || obj.user_id === 1 || obj.user_id === 3) {
             delete obj.user_id
             delete obj.start_date
             delete obj.cron
@@ -35,7 +33,28 @@ export default function GoalsIndex() {
     fetchData();
   }, [])
 
-  const goalCards = card.map((goal) => {
+
+  const deleteMe = (id) => {
+    axios.put('http://localhost:8001/api/goals/delete', { id })
+    .then(res => {
+      console.log("I am res.data:", res.data);
+      fetchData();
+    })
+  }
+  console.log("this is card", card);
+    return card.map(goal => (
+      <OutlinedCard
+        key={goal.id}
+        id={goal.id}
+        name={goal.goal_name}
+        endDate={goal.end_date}
+        friend1={goal.friend_1_phone_number}
+        friend2={goal.friend_2_phone_number}
+        delete={deleteMe}
+      />
+    ))
+  
+const goalCards = card.map((goal) => {
     
     return (
        <OutlinedCard
