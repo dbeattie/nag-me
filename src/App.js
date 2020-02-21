@@ -15,6 +15,7 @@ import NagTracker from './components/NagTracker';
 import GoalsIndex from './components/GoalsIndex';
 import Video from './components/Video';
 import AuthContext from './helpers/AuthContext';
+import UserContext from './helpers/UserContext';
 
 import './App.css';
 
@@ -47,8 +48,6 @@ function App(props) {
 
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState('');
-  
-  console.log("AUTH BEFORE USE EFFECT:", auth)
 
   useEffect(() => {
     checkAuth().then(value => {
@@ -56,35 +55,35 @@ function App(props) {
       setAuth(value.isAuthenticated)})
   }, []) 
 
-  console.log("AUTH AFTER USE EFFECT:", user)
-
   return (
-    <AuthContext.Provider value={{auth, setAuth}}>
-      <Router>
-        <div>
-          <NavBar />
-        </div>
-        <Switch>
-          <Route path="/home">
-            <Video />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <SignUp />
-          </Route>
-          <PrivateRoute path="/goals/new">
-            <CreateGoals />
-          </PrivateRoute>
-          <PrivateRoute path="/goals">
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Router>
+          <div>
+            <NavBar />
+          </div>
+          <Switch>
+            <Route path="/home">
+              <Video />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <SignUp />
+            </Route>
+            <PrivateRoute path="/goals/new">
+              <CreateGoals />
+            </PrivateRoute>
+            <PrivateRoute path="/goals">
               <GoalsIndex />
-          </PrivateRoute>
-          <PrivateRoute path="/nags">
-            <NagTracker />
-          </PrivateRoute>
-        </Switch>
-      </Router>
+            </PrivateRoute>
+            <PrivateRoute path="/nags">
+              <NagTracker />
+            </PrivateRoute>
+          </Switch>
+        </Router>
+      </UserContext.Provider>
     </AuthContext.Provider>
   )
 }
