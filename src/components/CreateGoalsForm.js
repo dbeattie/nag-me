@@ -46,8 +46,8 @@ export default function CreateGoals() {
     e.preventDefault();
     axios.put('http://localhost:8001/api/goals/new', { goal, startdate, enddate, phone1, phone2, nag })
     .then(res => {
-      console.log(res);
-      console.log(res.data);
+      // console.log(res);
+      // console.log(res.data);
     })
   }
 
@@ -98,7 +98,7 @@ export default function CreateGoals() {
             <h2>Completion Date</h2>
             <MaterialUIPickers 
               updateDate={(selectedDate) => {
-                console.log(selectedDate);
+                // console.log(selectedDate);
                 setEnddate(selectedDate);
               }}
             />

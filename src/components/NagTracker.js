@@ -19,19 +19,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-// function createData(name, date) {
-//   return { name, date };
-// }
-
-// const rows = [
-//   createData('Cupcake', 305),
-//   createData('Donut', 452),
-//   createData('Eclair', 262),
-//   createData('Frozen yoghurt', 159),
-//   createData('Gingerbread', 356),
-//   createData('Honeycomb', 408)
-// ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -222,13 +209,13 @@ export default function NagTracker() {
       const nagArray = Object.keys(results.data).map(nag => {
         return results.data[nag];
       });
-      console.log(nagArray);
+      // console.log(nagArray);
       const filterNags = nagArray.filter(obj => {
         if (obj.goal_id === 2) {
           return obj
         } else return null;
       });
-      console.log(filterNags);
+      // console.log(filterNags);
       setNags(filterNags);
       return filterNags;
     })

@@ -22,16 +22,13 @@ const checkAuth = () => {
   return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
     .then((response) => {
       if (response.data.result === "true") {
-        console.log(response.data.id);
-        return true
-      } else return false
+        return { isAuthenticated: true, id: response.data.id }
+      } else return { isAuthenticated: false, id: null }
     });
 };
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = useContext(AuthContext);
-  console.log("AUTH:", auth);
-  console.log({ children, ...rest })
   return (<Route
     {...rest}
     render={props =>
@@ -46,14 +43,20 @@ const PrivateRoute = ({ children, ...rest }) => {
 /*A <Switch> looks through all its children <Route> elements and renders the first one whose path matches the current URL. Use a <Switch> any time
 you have multiple routes, but you want only one of them to render at a time*/
 
-
 function App(props) {
 
   const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState('');
   
+  console.log("AUTH BEFORE USE EFFECT:", auth)
+
   useEffect(() => {
-    checkAuth().then(setAuth)
-  }, [])  
+    checkAuth().then(value => {
+      setUser(value.id); 
+      setAuth(value.isAuthenticated)})
+  }, []) 
+
+  console.log("AUTH AFTER USE EFFECT:", user)
 
   return (
     <AuthContext.Provider value={{auth, setAuth}}>
