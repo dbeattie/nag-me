@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import axios from "axios";
 
 import FloatingActionButton from './CreateNewFloatingButton';
-import OutlinedCard from './Card';
+import GoalOutlinedCard from './GoalCard';
 
 export default function GoalsIndex() {
 
@@ -45,7 +45,7 @@ export default function GoalsIndex() {
   const goalCards = card.map((goal) => {
 
     return (
-      <OutlinedCard
+      <GoalOutlinedCard
         key={goal.id}
         id={goal.id}
         name={goal.goal_name}

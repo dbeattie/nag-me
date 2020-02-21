@@ -18,26 +18,39 @@ const useStyles = makeStyles({
   }
 });
 
-export default function OutlinedCard(props) {
+
+export default function NagOutlinedCard(props) {
   const classes = useStyles();
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h2">
-          {props.name}
+           {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Ends on: {props.endDate}
+          Conmplete Nag by: {props.endDate}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
-          Edit
+         <Button
+          size="small"
+          color="primary"
+        //   onClick={() => props.delete(props.id)}
+        // Insert functionality here for Clicking on yes 
+        >
+          Yes 
         </Button>
-        <Button size="small" color="primary" onClick={() => props.delete(props.id)}>
-          Delete
+        <Button
+          size="small"
+          color="primary"
+        //   onClick={() => props.delete(props.id)}
+        // Insert functionality here for Clicking on no
+        >
+           No
         </Button>
       </CardActions>
     </Card>
   );
 }
+
+
