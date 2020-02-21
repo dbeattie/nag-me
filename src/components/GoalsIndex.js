@@ -1,56 +1,10 @@
 import React from 'react';
-import MaterialTable from 'material-table';
 import axios from "axios";
-import { useEffect, forwardRef } from 'react';
-
-import AddBox from '@material-ui/icons/AddBox';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import Check from '@material-ui/icons/Check';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
-import Clear from '@material-ui/icons/Clear';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
-import Edit from '@material-ui/icons/Edit';
-import FilterList from '@material-ui/icons/FilterList';
-import FirstPage from '@material-ui/icons/FirstPage';
-import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove';
-import SaveAlt from '@material-ui/icons/SaveAlt';
-import Search from '@material-ui/icons/Search';
-import ViewColumn from '@material-ui/icons/ViewColumn';
-import FloatingActionButton from './CreateNewFloatingButton';
-import CreateGoals from './CreateGoalsForm';
+import { useEffect } from 'react';
 import OutlinedCard from './Card';
-
-const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
-
 
 export default function GoalsIndex() {
 
-  const columns = [
-    { title: 'Name', field: 'name' },
-    { title: 'End Date', field: 'end_date', type: 'numeric'},
-  ];
-
-  const [rows, setRows] = React.useState([]);
   const [card, setCard] = React.useState([]);
 
   const fetchData = () => {
@@ -63,18 +17,15 @@ export default function GoalsIndex() {
 
         //Filter that Array by User_id and deletes data we don't want/need
         const filteredGoals = goalArr.filter(obj => {
-          if (obj.user_id === 2 || obj.user_id === 1) {
-            delete obj.id
+          if (obj.user_id === 2 || obj.user_id === 1 || obj.user_id === 3) {
             delete obj.user_id
             delete obj.start_date
             delete obj.cron
             return obj
           } else return null
         });
-        console.log({ filteredGoals });
         console.log(filteredGoals);   
         setCard(filteredGoals);
-       
       }).catch(err => console.error(err));
   }
 
@@ -83,84 +34,23 @@ export default function GoalsIndex() {
   }, [])
   console.log('hello', card)
 
-  
-   return card.map(goal => (
+  const deleteMe = (id) => {
+    axios.put('http://localhost:8001/api/goals/delete', { id })
+    .then(res => {
+      console.log("I am res.data:", res.data);
+      fetchData();
+    })
+  }
+  console.log("this is card", card);
+    return card.map(goal => (
       <OutlinedCard
-        key={goal.key}
+        key={goal.id}
+        id={goal.id}
         name={goal.goal_name}
         endDate={goal.end_date}
         friend1={goal.friend_1_phone_number}
         friend2={goal.friend_2_phone_number}
+        delete={deleteMe}
       />
     ))
-
-  // const temp = card.map((goal) => {
-  //   return (
-  //     <OutlinedCard
-  //     key={goal.key}
-  //     name={goal.goal_name}
-  //     endDate={goal.end_date}
-  //     friend1={goal.friend_1_phone_number}
-  //     friend2={goal.friend_2_phone_number}
-  //     />
-  //   )
-  // });
-  // return temp;
-  
-
-
-
-  // return (
-  //   <div>
-  //     <OutlinedCard
-  //        />
-  //   </div>
-
-    // <div style={{ maxwidth: "100%" }}>
-    //   <MaterialTable
-    //     icons={tableIcons}
-    //     title="Goals"
-    //     columns={columns}
-    //     data={rows}
-    //     editable={{
-    //       onRowAdd: newData =>
-    //         new Promise(resolve => {
-    //           setTimeout(() => {
-    //             resolve();
-    //             setRows(prevState => {
-    //               const data = [...prevState.data];
-    //               data.push(newData);
-    //               return { ...prevState, data };
-    //             });
-    //           }, 600);
-    //         }),
-    //       onRowUpdate: (newData, oldData) =>
-    //         new Promise(resolve => {
-    //           setTimeout(() => {
-    //             resolve();
-    //             if (oldData) {
-    //               setRows(prevState => {
-    //                 const data = [...prevState.data];
-    //                 data[data.indexOf(oldData)] = newData;
-    //                 return { ...prevState, data };
-    //               });
-    //             }
-    //           }, 600);
-    //         }),
-    //       onRowDelete: oldData =>
-    //         new Promise(resolve => {
-    //           setTimeout(() => {
-    //             resolve();
-    //             setRows(prevState => {
-    //               const data = [...prevState.data];
-    //               data.splice(data.indexOf(oldData), 1);
-    //               return { ...prevState, data };
-    //             });
-    //           }, 600);
-    //         }),
-    //     }}
-    //   />
-    //   <FloatingActionButton />
-    // </div>
-// );
 }
