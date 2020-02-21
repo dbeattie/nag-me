@@ -83,11 +83,7 @@ export default function NagTracker() {
       />
       );
     });
-    
-    
-    
-    console.log("nagCards are", nagCards)
-    
+   
   return (
     <div>
        <h1> Nags </h1>
