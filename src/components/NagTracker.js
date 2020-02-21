@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from "axios";
+
+// import UserContext from '../helpers/UserContext';
+// const { user } = useContext(UserContext);
+
 import FloatingActionButton from './CreateNewFloatingButton';
 import NagOutlinedCard from './NagCard';
-
-
 
 // //Styling, don't touch
 // const useStyles = makeStyles(theme => ({
@@ -29,6 +31,7 @@ import NagOutlinedCard from './NagCard';
 //     width: 1,
 //   },
 // }));
+
 
 export default function NagTracker() {
   

@@ -1,12 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import axios from "axios";
-
 import FloatingActionButton from './CreateNewFloatingButton';
+
+
+import UserContext from '../helpers/UserContext';
+
+// import styled from "styled-components";
+
+// const StyledHeader = styled.div`
+//   align-items: center;
+//   h2 {
+//     font-family: Arial, Helvetica, sans-serif;
+//     font-size: 14px;
+//   }
+// `;
+
 import GoalOutlinedCard from './GoalCard';
 
 export default function GoalsIndex() {
 
   const [card, setCard] = React.useState([]);
+  const { user } = useContext(UserContext);
+
+  console.log("USER:", user)
 
   const fetchData = () => {
     axios.get("http://localhost:8001/api/goals")
@@ -18,7 +34,7 @@ export default function GoalsIndex() {
 
         //Filter that Array by User_id and deletes data we don't want/need
         const filteredGoals = goalArr.filter(obj => {
-          if (obj.user_id === 2 || obj.user_id === 1 || obj.user_id === 3) {
+          if (obj.user_id === user) {
             delete obj.user_id
             delete obj.start_date
             delete obj.cron
@@ -59,6 +75,9 @@ export default function GoalsIndex() {
 
   return (
     <div>
+    {/* <StyledHeader> */}
+      <h1>Goals</h1>   
+    {/* </StyledHeader> */}
       <section className="goalCards" style={{ maxwidth: "100%" }}>
         {goalCards}
       </section>
