@@ -19,7 +19,6 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FloatingActionButton from './CreateNewFloatingButton';
-import CreateGoals from './CreateGoalsForm';
 import OutlinedCard from './Card';
 
 const tableIcons = {
@@ -83,84 +82,26 @@ export default function GoalsIndex() {
   }, [])
   console.log('hello', card)
 
+  const goalCards = card.map((goal) => {
+    
+    return (
+       <OutlinedCard
+         key={goal.key}
+         name={goal.goal_name}
+         endDate={goal.end_date}
+         friend1={goal.friend_1_phone_number}
+         friend2={goal.friend_2_phone_number}
+       />
+     );
+  });
+
+  return (
+    <div>
+      <section className="goalCards" style={{ maxwidth: "100%" }}>
+        {goalCards}
+      </section>
+      <FloatingActionButton />
+    </div>
+  );
   
-   return card.map(goal => (
-      <OutlinedCard
-        key={goal.key}
-        name={goal.goal_name}
-        endDate={goal.end_date}
-        friend1={goal.friend_1_phone_number}
-        friend2={goal.friend_2_phone_number}
-      />
-    ))
-
-  // const temp = card.map((goal) => {
-  //   return (
-  //     <OutlinedCard
-  //     key={goal.key}
-  //     name={goal.goal_name}
-  //     endDate={goal.end_date}
-  //     friend1={goal.friend_1_phone_number}
-  //     friend2={goal.friend_2_phone_number}
-  //     />
-  //   )
-  // });
-  // return temp;
-  
-
-
-
-  // return (
-  //   <div>
-  //     <OutlinedCard
-  //        />
-  //   </div>
-
-    // <div style={{ maxwidth: "100%" }}>
-    //   <MaterialTable
-    //     icons={tableIcons}
-    //     title="Goals"
-    //     columns={columns}
-    //     data={rows}
-    //     editable={{
-    //       onRowAdd: newData =>
-    //         new Promise(resolve => {
-    //           setTimeout(() => {
-    //             resolve();
-    //             setRows(prevState => {
-    //               const data = [...prevState.data];
-    //               data.push(newData);
-    //               return { ...prevState, data };
-    //             });
-    //           }, 600);
-    //         }),
-    //       onRowUpdate: (newData, oldData) =>
-    //         new Promise(resolve => {
-    //           setTimeout(() => {
-    //             resolve();
-    //             if (oldData) {
-    //               setRows(prevState => {
-    //                 const data = [...prevState.data];
-    //                 data[data.indexOf(oldData)] = newData;
-    //                 return { ...prevState, data };
-    //               });
-    //             }
-    //           }, 600);
-    //         }),
-    //       onRowDelete: oldData =>
-    //         new Promise(resolve => {
-    //           setTimeout(() => {
-    //             resolve();
-    //             setRows(prevState => {
-    //               const data = [...prevState.data];
-    //               data.splice(data.indexOf(oldData), 1);
-    //               return { ...prevState, data };
-    //             });
-    //           }, 600);
-    //         }),
-    //     }}
-    //   />
-    //   <FloatingActionButton />
-    // </div>
-// );
 }

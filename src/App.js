@@ -22,6 +22,7 @@ const checkAuth = () => {
   return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
     .then((response) => {
       if (response.data.result === "true") {
+        console.log(response.data.id);
         return true
       } else return false
     });
