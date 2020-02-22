@@ -72,7 +72,7 @@ export default function GoalsIndex(props) {
   // };
 
   const goalCards = card.map((goal) => {
-    console.log("I am the goal: ", goal);
+    // console.log("I am the goal: ", goal);
     return (
       <GoalOutlinedCard
         key={goal.id}
@@ -106,8 +106,8 @@ export default function GoalsIndex(props) {
         <section className="goalCards" style={{ maxwidth: "100%" }}>
           {goalCards}
         </section>
-        
         <FloatingActionButton />
       </div>
     );
-}
+  }
+};

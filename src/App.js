@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/Register';
 import CreateGoals from './components/CreateGoalsForm';
+import EditGoals from './components/EditGoalsForm';
 import NagTracker from './components/NagTracker';
 import GoalsIndex from './components/GoalsIndex';
 import Video from './components/Video';
@@ -79,6 +80,9 @@ function App(props) {
             <PrivateRoute path="/goals">
               <GoalsIndex />
             </PrivateRoute>
+            {/* PROBABLY RELATED TO AUTH ON GOALS NEW/EDIT, not set <PrivateRoute path="/goals/edit">
+              <EditGoals />
+            </PrivateRoute> */}
             <PrivateRoute path="/nags">
               <NagTracker />
             </PrivateRoute>
