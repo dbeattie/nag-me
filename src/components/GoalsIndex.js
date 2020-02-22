@@ -1,13 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import axios from "axios";
 import FloatingActionButton from './CreateNewFloatingButton';
-import OutlinedCard from './Card';
+import GoalOutlinedCard from './GoalCard';
 import EditGoals from './EditGoalsForm';
+
+
+import UserContext from '../helpers/UserContext';
+
+// import styled from "styled-components";
+
+// const StyledHeader = styled.div`
+//   align-items: center;
+//   h2 {
+//     font-family: Arial, Helvetica, sans-serif;
+//     font-size: 14px;
+//   }
+// `;
 
 export default function GoalsIndex() {
 
   const [card, setCard] = React.useState([]);
   const [editing, setEditing] = React.useState(false);
+  const { user } = useContext(UserContext);
+
+  console.log("USER:", user)
 
   const fetchData = () => {
     axios.get("http://localhost:8001/api/goals")
@@ -41,22 +57,22 @@ export default function GoalsIndex() {
       })
   }
 
-  const editGoal = (currentGoal) => {
-    return (
-      <EditGoals
-        id={currentGoal.id}
-        name={currentGoal.name}
-        endDate={currentGoal.endDate}
-        friend1={currentGoal.friend1}
-        friend2={currentGoal.friend2}
-      />
-    )
-  };
+  // const editGoal = (currentGoal) => {
+  //   return (
+  //     <EditGoals
+  //       id={currentGoal.id}
+  //       name={currentGoal.name}
+  //       endDate={currentGoal.endDate}
+  //       friend1={currentGoal.friend1}
+  //       friend2={currentGoal.friend2}
+  //     />
+  //   )
+  // };
 
   const goalCards = card.map((goal) => {
     console.log("I am the goal: ", goal);
     return (
-      <OutlinedCard
+      <GoalOutlinedCard
         key={goal.id}
         id={goal.id}
         name={goal.goal_name}
@@ -79,6 +95,9 @@ export default function GoalsIndex() {
         friend2={editing.friend2}
       />
     )}
+    {/* <StyledHeader> */}
+      <h1>Goals</h1>   
+    {/* </StyledHeader> */}
       <section className="goalCards" style={{ maxwidth: "100%" }}>
         {goalCards}
       </section>

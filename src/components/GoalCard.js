@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function OutlinedCard(props) {
+export default function GoalOutlinedCard(props) {
   const classes = useStyles();
   return (
     <Card className={classes.root} variant="outlined">
@@ -35,7 +35,11 @@ export default function OutlinedCard(props) {
         <Button size="small" color="primary" component={Link} to="/goals/edit" onClick={() => props.edit(props)}>
           Edit
         </Button>
-        <Button size="small" color="primary" onClick={() => props.delete(props.id)}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => props.delete(props.id)}
+        >
           Delete
         </Button>
       </CardActions>
