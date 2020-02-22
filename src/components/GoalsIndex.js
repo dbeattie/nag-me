@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from 'react';
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import FloatingActionButton from './CreateNewFloatingButton';
 import GoalOutlinedCard from './GoalCard';
 import EditGoals from './EditGoalsForm';
 
-
 import UserContext from '../helpers/UserContext';
+import AuthContext from '../helpers/AuthContext';
 
 // import styled from "styled-components";
 
@@ -17,13 +18,14 @@ import UserContext from '../helpers/UserContext';
 //   }
 // `;
 
-export default function GoalsIndex() {
+export default function GoalsIndex(props) {
 
   const [card, setCard] = React.useState([]);
   const [editing, setEditing] = React.useState(false);
+  const { auth } = useContext(AuthContext);
   const { user } = useContext(UserContext);
 
-  console.log("USER:", user)
+  console.log("GOAL PAGE USER:", user)
 
   const fetchData = () => {
     axios.get("http://localhost:8001/api/goals")
@@ -85,24 +87,27 @@ export default function GoalsIndex() {
     );
   });
 
-  return (
-    <div>
-      { editing && (<EditGoals
-        id={editing.id}
-        name={editing.name}
-        endDate={editing.endDate}
-        friend1={editing.friend1}
-        friend2={editing.friend2}
-      />
-    )}
-    {/* <StyledHeader> */}
-      <h1>Goals</h1>   
-    {/* </StyledHeader> */}
-      <section className="goalCards" style={{ maxwidth: "100%" }}>
-        {goalCards}
-      </section>
-      
-      <FloatingActionButton />
-    </div>
-  );
+  if (!auth) {
+    return (<Redirect to="/login" />); 
+  } else {
+    return (
+      <div>
+        { editing && (<EditGoals
+          id={editing.id}
+          name={editing.name}
+          endDate={editing.endDate}
+          friend1={editing.friend1}
+          friend2={editing.friend2}
+        />
+      )}
+      {/* <StyledHeader> */}
+        <h1>Goals</h1>   
+      {/* </StyledHeader> */}
+        <section className="goalCards" style={{ maxwidth: "100%" }}>
+          {goalCards}
+        </section>
+        
+        <FloatingActionButton />
+      </div>
+    );
 }

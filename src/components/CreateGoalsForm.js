@@ -43,6 +43,7 @@ export default function CreateGoals(props) {
   const [phone2, setPhone2] = React.useState('');
 
   const startdate =new Date();
+  console.log("CREATE GOAL PAGE USER:", user)
 
   const submitMe = (e) => {
     e.preventDefault();
