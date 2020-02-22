@@ -30,8 +30,9 @@ export default function GoalsIndex(props) {
   const fetchData = async () => {
     
     try {
-      const goals = await axios.get("http://localhost:8001/api/goals")
-        
+      const goals = await axios.get("http://localhost:8001/api/goals", { withCredentials: true })
+      
+      console.log("GOALS:", goals.data);
       //Convert Object of Objects into an Array of Objects
       const goalArr = Object.keys(goals.data).map(goal => {
         return goals.data[goal]

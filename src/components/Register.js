@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import AuthContext from '../helpers/AuthContext';
+import UserContext from '../helpers/UserContext';
 
 function Copyright() {
   return (
@@ -68,6 +69,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const {auth, setAuth} = useContext(AuthContext);
+  const {user, setUser} = useContext(UserContext);
 
   const handleSubmit = () => {
     
@@ -81,13 +83,8 @@ export default function SignUp() {
     axios
       .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
       .then(res => {
-        // console.log(res);
-        if (res.status === 200) {
-          setAuth(true)
-        } else {
-          const error = new Error(res.error);
-          throw error;
-        }
+        setAuth(true)
+        setUser(res.data.user.id)
       })
       .catch(err => {
         console.error(err);
