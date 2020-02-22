@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MaterialUIPickers from './Picker';
@@ -31,20 +31,48 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateGoals(props) {
+export default function EditGoals(props) {
+  console.log("i am the props: ", props);
   const classes = useStyles();
+
+  const getNagName = async () => {
   
-  const [goal, setGoal] = React.useState("");
+    const result = await axios.get("http://localhost:8001/api/nags",)
+    
+    const nagArray = Object.keys(result.data).map(nag => {
+      return result.data[nag];
+    });
+
+    const filterNags = nagArray.find(obj => {
+      if (obj.goal_id === props.id) {
+        return obj.nag_name;
+      } else return null;
+    });
+    // console.log("I am filterNag:", filterNags.nag_name);
+    setNag(filterNags.nag_name);
+  }
+    
+
+  useEffect(() => {
+    console.log("getNagName:", getNagName())
+    getNagName();
+  }, [])
+
+
+  const [goal, setGoal] = React.useState(props.name || "");
+  const [goalid, setGoalid] = React.useState(props.id || "");
   const [nag, setNag] = React.useState("");
   const [enddate, setEnddate] = React.useState('');
-  const [phone1, setPhone1] = React.useState('');
-  const [phone2, setPhone2] = React.useState('');
+  const [phone1, setPhone1] = React.useState(props.friend1 || '');
+  const [phone2, setPhone2] = React.useState(props.friend2 || '');
 
   const startdate =new Date();
 
+  // getNagName();
+
   const submitMe = (e) => {
     e.preventDefault();
-    axios.put('http://localhost:8001/api/goals/new', { goal, startdate, enddate, phone1, phone2, nag })
+    axios.put('http://localhost:8001/api/goals/edit', { goalid, goal, startdate, enddate, phone1, phone2, nag })
     .then(res => {
       // console.log(res);
       // console.log(res.data);
@@ -57,7 +85,7 @@ export default function CreateGoals(props) {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Typography component="h1" variant="h5" className={classes.form} >
-            Create Goals
+            Edit Goals
           </Typography>
           <form 
             className={classes.form} 
@@ -70,6 +98,7 @@ export default function CreateGoals(props) {
                 label="Goal Title" 
                 variant="outlined"
                 fullWidth
+                value={goal}
                 margin="normal"
                 onChange={(e) => setGoal(e.target.value)} />
               <TextField 
@@ -78,6 +107,7 @@ export default function CreateGoals(props) {
                 variant="outlined"
                 fullWidth
                 margin="normal"
+                value={nag}
                 onChange={(e) => setNag(e.target.value)} />
               <TextField 
                 id="outlined-basic"
@@ -85,6 +115,7 @@ export default function CreateGoals(props) {
                 variant="outlined"
                 fullWidth
                 margin="normal"
+                value={phone1}
                 onChange={(e) => setPhone1(e.target.value)} />
               <TextField 
                 id="outlined-basic"
@@ -92,6 +123,7 @@ export default function CreateGoals(props) {
                 variant="outlined"
                 fullWidth
                 margin="normal"
+                value={phone2}
                 onChange={(e) => setPhone2(e.target.value)} />
             {/* <h2>Frequency</h2> */}
             {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
