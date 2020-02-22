@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CreateGoals() {
+export default function CreateGoals(props) {
   const classes = useStyles();
   
   const { user } = useContext(UserContext);
@@ -43,6 +43,7 @@ export default function CreateGoals() {
   const [phone2, setPhone2] = React.useState('');
 
   const startdate =new Date();
+  console.log("CREATE GOAL PAGE USER:", user)
 
   const submitMe = (e) => {
     e.preventDefault();

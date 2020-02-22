@@ -30,7 +30,7 @@ import NagOutlinedCard from './NagCard';
 // }));
 
 
-export default function NagTracker() {
+export default function NagTracker(props) {
 
   const { user } = useContext(UserContext);
   const [nags, setNags] = React.useState([]);
@@ -71,6 +71,8 @@ export default function NagTracker() {
   React.useEffect(() => {
     fetchNags();
   }, [])
+
+  console.log("NAG PAGE USER:", user)
 
   // UPDATE THE BELOW LOGIC TO HANDLE COMPLETED OR NOT
 

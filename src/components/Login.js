@@ -77,8 +77,8 @@ export default function Login(props) {
     return axios
       .post("http://localhost:8001/api/login", authUser, {withCredentials: true})
       .then(res => {
-        console.log(res)
-        if (res.status === 200) {
+        console.log('RES:', res.data.result)
+        if (res.data.result === true) {
           setAuth(true)
         } else {
           const error = new Error(res.error);
