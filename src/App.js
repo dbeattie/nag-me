@@ -30,6 +30,7 @@ const checkAuth = () => {
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = useContext(AuthContext);
+  console.log("PRIVATE ROUTE AUTH:", auth)
   return (<Route
     {...rest}
     render={props =>
