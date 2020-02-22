@@ -64,28 +64,19 @@ export default function NagTracker() {
 
   // UPDATE THE BELOW LOGIC TO HANDLE COMPLETED OR NOT
 
-  // const deleteGoal = (id) => {
-  //   axios.put('http://localhost:8001/api/nags/delete', { id })
-  //     .then(res => {
-  //       console.log("I am res.data:", res.data);
-  //       fetchData();
-  //     })
-  // }
-
-
   const nagCards = nags.map((nag) => {
+
     return (
       <NagOutlinedCard
       key={nag.id}
       id={nag.id}
       name={nag.nag_name}
       endDate={nag.date}
-      friend1={nag.friend_1_phone_number}
-      friend2={nag.friend_2_phone_number}
-      // delete={deleteGoal}
+      completion={nag.completion}
       />
       );
     });
+    console.log("nagsCards are, ", nagCards)
    
   return (
     <div>
