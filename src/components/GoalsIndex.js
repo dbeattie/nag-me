@@ -110,4 +110,5 @@ export default function GoalsIndex(props) {
         <FloatingActionButton />
       </div>
     );
+  }
 }
