@@ -79,8 +79,8 @@ export default function Login(props) {
     axios
       .post("http://localhost:8001/api/login", authUser, { withCredentials: true })
       .then(res => {
-          setAuth(true)
-          setUser(res.data.id)
+        setAuth(true)
+        setUser(res.data.id)
       })
       .catch(err => {
         console.error("Error logging in please try again", err);

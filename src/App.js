@@ -23,6 +23,7 @@ import './App.css';
 const checkAuth = () => {
   return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
     .then((response) => {
+      console.log("response", response);
       if (response.data.result === true) {
         return { isAuthenticated: true, id: response.data.id }
       } else return { isAuthenticated: false, id: null }
