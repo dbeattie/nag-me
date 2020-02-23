@@ -1,12 +1,8 @@
-import React, { useEffect, useContext } from 'react';
-import { Redirect } from "react-router-dom";
+import React, { useEffect } from 'react';
 import axios from "axios";
 import FloatingActionButton from './CreateNewFloatingButton';
 import GoalOutlinedCard from './GoalCard';
 import EditGoals from './EditGoalsForm';
-
-import UserContext from '../helpers/UserContext';
-import AuthContext from '../helpers/AuthContext';
 
 // import styled from "styled-components";
 
@@ -22,32 +18,20 @@ export default function GoalsIndex(props) {
 
   const [card, setCard] = React.useState([]);
   const [editing, setEditing] = React.useState(false);
-  const { auth } = useContext(AuthContext);
-  const { user } = useContext(UserContext);
 
-  console.log("GOAL PAGE USER:", user)
+  // console.log("GOAL PAGE USER:", user)
 
   const fetchData = async () => {
     
     try {
       const goals = await axios.get("http://localhost:8001/api/goals", { withCredentials: true })
       
-      console.log("GOALS:", goals.data);
-      //Convert Object of Objects into an Array of Objects
-      const goalArr = Object.keys(goals.data).map(goal => {
+      //Convert the object that comes back into an array of objects
+      const goalsArr = Object.keys(goals.data).map(goal => {
         return goals.data[goal]
       });
-      
-      //Filter that Array by User_id and deletes data we don't want/need
-      const filteredGoals = goalArr.filter(obj => {
-        if (obj.user_id === user) {
-          // delete obj.user_id
-          // delete obj.start_date
-          delete obj.cron
-          return obj
-        } else return null
-      });
-      setCard(filteredGoals);
+
+      setCard(goalsArr);
       
     } catch (error) {
       console.error(error)
@@ -59,7 +43,7 @@ export default function GoalsIndex(props) {
   }, [])
 
   const deleteGoal = (id) => {
-    axios.put('http://localhost:8001/api/goals/delete', { id })
+    axios.put('http://localhost:8001/api/goals/delete', { id }, { withCredentials: true })
       .then(res => {
         fetchData();
       })
@@ -78,7 +62,6 @@ export default function GoalsIndex(props) {
   // };
 
   const goalCards = card.map((goal) => {
-    // console.log("I am the goal: ", goal);
     return (
       <GoalOutlinedCard
         key={goal.id}
@@ -93,27 +76,23 @@ export default function GoalsIndex(props) {
     );
   });
 
-  if (!auth) {
-    return (<Redirect to="/login" />); 
-  } else {
-    return (
-      <div>
-        { editing && (<EditGoals
-          id={editing.id}
-          name={editing.name}
-          endDate={editing.endDate}
-          friend1={editing.friend1}
-          friend2={editing.friend2}
-        />
-      )}
-      {/* <StyledHeader> */}
-        <h1>Goals</h1>   
-      {/* </StyledHeader> */}
-        <section className="goalCards" style={{ maxwidth: "100%" }}>
-          {goalCards}
-        </section>
-        <FloatingActionButton />
-      </div>
-    );
-  }
+  return (
+    <div>
+      { editing && (<EditGoals
+        id={editing.id}
+        name={editing.name}
+        endDate={editing.endDate}
+        friend1={editing.friend1}
+        friend2={editing.friend2}
+      />
+    )}
+    {/* <StyledHeader> */}
+      <h1>Goals</h1>   
+    {/* </StyledHeader> */}
+      <section className="goalCards" style={{ maxwidth: "100%" }}>
+        {goalCards}
+      </section>
+      <FloatingActionButton />
+    </div>
+  );
 };
