@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EditGoals(props) {
   console.log("i am the props: ", props);
+  console.log("I am the passed in enddate: ", props.endDate);
   const classes = useStyles();
 
   const getNagName = async () => {
@@ -52,7 +53,6 @@ export default function EditGoals(props) {
     // console.log("I am filterNag:", filterNags.nag_name);
     setNag(filterNags.nag_name);
   }
-    
 
   useEffect(() => {
     console.log("getNagName:", getNagName())
@@ -131,10 +131,10 @@ export default function EditGoals(props) {
             {/* <h2>Frequency</h2> */}
             {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
             <h2>Completion Date</h2>
-            <MaterialUIPickers 
-              updateDate={(selectedDate) => {
-                // console.log(selectedDate);
-                setEnddate(selectedDate);
+            <MaterialUIPickers
+              initialEndDate={props.endDate}
+              updateDate={(d) => {
+                setEnddate(d);
               }}
             />
             <Button 
