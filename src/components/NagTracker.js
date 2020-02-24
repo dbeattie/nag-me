@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from "axios";
-
-import UserContext from '../helpers/UserContext';
 import NagOutlinedCard from './NagCard';
 
-// //Styling, don't touch
+// //Styling, don't touch for now, may apply to this page.
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     width: '100%',
@@ -29,50 +27,33 @@ import NagOutlinedCard from './NagCard';
 //   },
 // }));
 
-
 export default function NagTracker(props) {
 
-  const { user } = useContext(UserContext);
   const [nags, setNags] = React.useState([]);
   
   //Get data from nags table from database
   const fetchNags = async () => {
   
-    const allNags = await axios.get("http://localhost:8001/api/nags");
+    try {
+      const allNags = await axios.get("http://localhost:8001/api/nags", { withCredentials: true });
 
-    const nagArray = Object.keys(allNags.data).map(nag => {
-      return allNags.data[nag];
-    });
+      //Convert the object that comes back into an array of objects
+      const nagArray = Object.keys(allNags.data).map(nag => {
+        return allNags.data[nag];
+      });
       
-    const allGoals = await axios.get("http://localhost:8001/api/goals");
-
-    const goalArray = Object.keys(allGoals.data).map(goal => {
-      return allGoals.data[goal];
-    })
-
-    //Outputs an array of goals based on the logged in user
-    const goalsPerUser = goalArray.filter(obj => {
-      if (obj.user_id === user) {
-        return obj
-      } else return null;
-    }); 
-
-    //Outputs an array of goal ids
-    const GoalIds = goalsPerUser.map(goal => goal.id)
-  
-    //Filters the nagArray for any goal_id's that match
-    var filteredNags = nagArray.filter(nag => {
-      return GoalIds.includes(nag.goal_id);
-    });
+      setNags(nagArray);
     
-    setNags(filteredNags);
-  };
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchNags();
   }, [])
 
-  console.log("NAG PAGE USER:", user)
+  // console.log("NAG PAGE USER:", user)
 
   // UPDATE THE BELOW LOGIC TO HANDLE COMPLETED OR NOT
 
@@ -88,7 +69,6 @@ export default function NagTracker(props) {
       />
       );
     });
-    console.log("nagsCards are, ", nagCards)
    
   return (
     <div>

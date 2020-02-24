@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MaterialUIPickers from './Picker';
@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from 'axios';
-import UserContext from '../helpers/UserContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,22 +34,29 @@ const useStyles = makeStyles(theme => ({
 export default function CreateGoals(props) {
   const classes = useStyles();
   
-  const { user } = useContext(UserContext);
   const [goal, setGoal] = React.useState("");
   const [nag, setNag] = React.useState("");
   const [enddate, setEnddate] = React.useState('');
   const [phone1, setPhone1] = React.useState('');
   const [phone2, setPhone2] = React.useState('');
 
-  const startdate =new Date();
-  console.log("CREATE GOAL PAGE USER:", user)
+  const startdate = new Date();
+  // console.log("CREATE GOAL PAGE USER:", user)
+
+  const newGoal = {
+    goal: goal,
+    startdate: startdate,
+    enddate: enddate,
+    phone1: phone1,
+    phone2: phone2, 
+    nag: nag
+  }
 
   const submitMe = (e) => {
     e.preventDefault();
-    axios.put('http://localhost:8001/api/goals/new', { goal, user, startdate, enddate, phone1, phone2, nag })
+    axios.put('http://localhost:8001/api/goals/new', newGoal, {withCredentials: true})
     .then(res => {
-      // console.log(res);
-      // console.log(res.data);
+      console.log(res);
     })
   }
 

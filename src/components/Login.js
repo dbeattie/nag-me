@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import AuthContext from '../helpers/AuthContext';
+import UserContext from '../helpers/UserContext';
 
 function Copyright() {
   return (
@@ -65,6 +66,7 @@ export default function Login(props) {
   const classes = useStyles();
 
   const {auth, setAuth} = useContext(AuthContext);
+  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -74,16 +76,11 @@ export default function Login(props) {
       password: password
     }
 
-    return axios
-      .post("http://localhost:8001/api/login", authUser, {withCredentials: true})
+    axios
+      .post("http://localhost:8001/api/login", authUser, { withCredentials: true })
       .then(res => {
-        console.log('RES:', res.data.result)
-        if (res.data.result === true) {
-          setAuth(true)
-        } else {
-          const error = new Error(res.error);
-          throw error;
-        }
+        setAuth(true)
+        setUser(res.data.id)
       })
       .catch(err => {
         console.error("Error logging in please try again", err);

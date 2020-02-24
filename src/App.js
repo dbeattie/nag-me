@@ -23,7 +23,8 @@ import './App.css';
 const checkAuth = () => {
   return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
     .then((response) => {
-      if (response.data.result === "true") {
+      console.log("response", response);
+      if (response.data.result === true) {
         return { isAuthenticated: true, id: response.data.id }
       } else return { isAuthenticated: false, id: null }
     });
@@ -31,7 +32,7 @@ const checkAuth = () => {
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = useContext(AuthContext);
-  console.log("PRIVATE ROUTE AUTH:", auth)
+  // console.log("PRIVATE ROUTE AUTH:", auth)
   return (<Route
     {...rest}
     render={props =>
@@ -77,12 +78,12 @@ function App(props) {
             <PrivateRoute path="/goals/new">
               <CreateGoals />
             </PrivateRoute>
+            {/* DATA DOESN'T GET COPIED OVER FROM GOALS THIS WAY <PrivateRoute path="/goals/edit">
+              <EditGoals />
+            </PrivateRoute> */}
             <PrivateRoute path="/goals">
               <GoalsIndex />
             </PrivateRoute>
-            {/* PROBABLY RELATED TO AUTH ON GOALS NEW/EDIT, not set <PrivateRoute path="/goals/edit">
-              <EditGoals />
-            </PrivateRoute> */}
             <PrivateRoute path="/nags">
               <NagTracker />
             </PrivateRoute>
