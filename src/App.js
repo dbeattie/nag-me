@@ -18,6 +18,8 @@ import Video from './components/Video';
 import AuthContext from './helpers/AuthContext';
 import UserContext from './helpers/UserContext';
 
+
+
 import './App.css';
 
 const checkAuth = () => {

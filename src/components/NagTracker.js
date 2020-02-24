@@ -3,6 +3,7 @@ import axios from "axios";
 
 import UserContext from '../helpers/UserContext';
 import NagOutlinedCard from './NagCard';
+import Chart from './Chart';
 
 // //Styling, don't touch
 // const useStyles = makeStyles(theme => ({
@@ -91,11 +92,15 @@ export default function NagTracker(props) {
     console.log("nagsCards are, ", nagCards)
    
   return (
-    <div>
+    <div className= "Wrapper"> 
+     <div className = "container d-flex flex-column justify-content-center align-items center">
        <h1> Nags </h1>
+       <div classname="title text center mb-5"> </div>
+       <Chart  />
       <section className="goalCards" style={{ maxwidth: "100%" }}>
         {nagCards}
       </section>
+      </div>
     </div>
   );
 }
