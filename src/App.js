@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import Login from './components/Login';
 import SignUp from './components/Register';
 import CreateGoals from './components/CreateGoalsForm';
+import EditGoals from './components/EditGoalsForm';
 import NagTracker from './components/NagTracker';
 import GoalsIndex from './components/GoalsIndex';
 import Video from './components/Video';
@@ -22,7 +23,8 @@ import './App.css';
 const checkAuth = () => {
   return axios.get('http://localhost:8001/api/auth', { withCredentials: true })
     .then((response) => {
-      if (response.data.result === "true") {
+      console.log("response", response);
+      if (response.data.result === true) {
         return { isAuthenticated: true, id: response.data.id }
       } else return { isAuthenticated: false, id: null }
     });
@@ -30,7 +32,7 @@ const checkAuth = () => {
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = useContext(AuthContext);
-  console.log("PRIVATE ROUTE AUTH:", auth)
+  // console.log("PRIVATE ROUTE AUTH:", auth)
   return (<Route
     {...rest}
     render={props =>
@@ -76,6 +78,9 @@ function App(props) {
             <PrivateRoute path="/goals/new">
               <CreateGoals />
             </PrivateRoute>
+            {/* DATA DOESN'T GET COPIED OVER FROM GOALS THIS WAY <PrivateRoute path="/goals/edit">
+              <EditGoals />
+            </PrivateRoute> */}
             <PrivateRoute path="/goals">
               <GoalsIndex />
             </PrivateRoute>
