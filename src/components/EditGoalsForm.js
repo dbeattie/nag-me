@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MaterialUIPickers from './Picker';
@@ -69,7 +70,7 @@ export default function EditGoals(props) {
   const startdate =new Date();
 
   // getNagName();
-
+  let history = useHistory();
   const submitMe = (e) => {
     e.preventDefault();
     axios.put('http://localhost:8001/api/goals/edit', { goalid, goal, startdate, enddate, phone1, phone2, nag })
@@ -77,6 +78,8 @@ export default function EditGoals(props) {
       // console.log(res);
       // console.log(res.data);
     })
+    console.log("hello, I am going to redirect to Goals page!");
+    history.push("/goals");
   }
 
   return (
@@ -147,5 +150,6 @@ export default function EditGoals(props) {
         </div>
       </Grid>
     </Grid>
+
   );
 }

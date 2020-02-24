@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MaterialUIPickers from './Picker';
@@ -52,12 +53,14 @@ export default function CreateGoals(props) {
     nag: nag
   }
 
+  let history = useHistory();
   const submitMe = (e) => {
     e.preventDefault();
     axios.put('http://localhost:8001/api/goals/new', newGoal, {withCredentials: true})
     .then(res => {
       console.log(res);
     })
+    history.push("/goals");
   }
 
   return (

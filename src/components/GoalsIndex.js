@@ -76,23 +76,28 @@ export default function GoalsIndex(props) {
     );
   });
 
-  return (
-    <div>
-      { editing && (<EditGoals
-        id={editing.id}
-        name={editing.name}
-        endDate={editing.endDate}
-        friend1={editing.friend1}
-        friend2={editing.friend2}
-      />
-    )}
-    {/* <StyledHeader> */}
-      <h1>Goals</h1>   
-    {/* </StyledHeader> */}
-      <section className="goalCards" style={{ maxwidth: "100%" }}>
-        {goalCards}
-      </section>
-      <FloatingActionButton />
-    </div>
-  );
+  if (!auth) {
+    return (<Redirect to="/login" />); 
+  } else {
+    return (
+      <div>
+        { editing && (<EditGoals
+          id={editing.id}
+          name={editing.name}
+          endDate={editing.endDate}
+          friend1={editing.friend1}
+          friend2={editing.friend2}
+        />
+      )}
+      {/* <StyledHeader> */}
+        <h1>Goals</h1>   
+      {/* </StyledHeader> */}
+        <section className="goalCards" style={{ maxwidth: "100%" }}>
+          {goalCards}
+        </section>
+        
+        <FloatingActionButton />
+      </div>
+    );
+  }
 };
