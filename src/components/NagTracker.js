@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import NagOutlinedCard from './NagCard';
+
+import UserContext from "../helpers/UserContext";
+import NagOutlinedCard from "./NagCard";
+import Chart from "./Chart";
 
 // //Styling, don't touch for now, may apply to this page.
 // const useStyles = makeStyles(theme => ({
@@ -29,11 +32,12 @@ import NagOutlinedCard from './NagCard';
 
 export default function NagTracker(props) {
 
+  //NOT SURE if user useContext is necessary anymore, after all the back end changes...
+  const { user } = useContext(UserContext);
   const [nags, setNags] = React.useState([]);
-  
+
   //Get data from nags table from database
   const fetchNags = async () => {
-  
     try {
       const allNags = await axios.get("http://localhost:8001/api/nags", { withCredentials: true });
 
@@ -51,28 +55,27 @@ export default function NagTracker(props) {
 
   useEffect(() => {
     fetchNags();
-  }, [])
-
-  // console.log("NAG PAGE USER:", user)
+  }, []);
 
   // UPDATE THE BELOW LOGIC TO HANDLE COMPLETED OR NOT
 
-  const nagCards = nags.map((nag) => {
-
+  const nagCards = nags.map(nag => {
     return (
       <NagOutlinedCard
-      key={nag.id}
-      id={nag.id}
-      name={nag.nag_name}
-      endDate={nag.date}
-      completion={nag.completion}
+        key={nag.id}
+        id={nag.id}
+        name={nag.nag_name}
+        endDate={nag.date}
+        completion={nag.completion}
       />
-      );
-    });
+    );
+  });
+  console.log("nagsCards are, ", nagCards);
    
   return (
     <div>
-       <h1> Nags </h1>
+      <h1> Nags </h1>
+      <Chart />
       <section className="goalCards" style={{ maxwidth: "100%" }}>
         {nagCards}
       </section>
