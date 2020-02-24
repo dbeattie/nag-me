@@ -1,23 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Pie } from "react-chartjs-2";
+import axios from "axios";
 
 const Chart = props => {
+  const [NagCompletionData, setNagCompletionData] = React.useState([]);
+  
+
+  const fetchData = async () => {
+    try {
+      const nags = await axios.get(
+        "http://localhost:8001/api/nags/completiondata",
+        { withCredentials: true }
+      );
+
+      //Convert the object that comes back into an array of objects
+      const nagsArr = Object.keys(nags.data).map(nags => {
+        return nags.data[nags];
+      });
+
+      setNagCompletionData(nagsArr);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [state, setState] = useState({
     chartData: {
-      labels: ["Days Nag Completed", "Days Nags Incomplete"],
+      labels: [
+        "Days Nag Completed",
+        "Days Nags Incomplete",
+        "Nags With No Reply"
+      ],
+      fontSize: 200,
       datasets: [
         {
           label: "Nag Completion",
-          data: [80000, 199990],
+          data: [76, 50, 20],
           backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
         }
       ]
     }
   });
-
-  useEffect(()=> {
-      console.log("it works")
-  })
 
   return (
     <div className="chart">
@@ -26,32 +53,32 @@ const Chart = props => {
         options={{
           title: {
             display: true,
-            text: `Nag Completion Rate during Learn the Guitar`,
-            fontSize: 20,
+            text: `Nag Completion Rate`,
+            fontSize: 25,
             align: "center",
             responsive: true
           },
-        //   plugins: {
-        //     datalabels: {
-        //       color: "#fff",
-        //       anchor: "end",
-        //       align: "start",
-        //       offset: -10,
-        //       borderWidth: 2,
-        //       borderColor: "#fff",
-        //       borderRadius: 25,
-        //       backgroundColor: context => {
-        //         return context.dataset.backgroundColor;
-        //       },
-        //       font: {
-        //         weight: "bold",
-        //         size: 15
-        //       },
-        //       formatter: value => {
-        //         return value + " %";
-        //       }
-        //     }
-        //   },
+          //   plugins: {
+          //     datalabels: {
+          //       color: "#fff",
+          //       anchor: "end",
+          //       align: "start",
+          //       offset: -10,
+          //       borderWidth: 2,
+          //       borderColor: "#fff",
+          //       borderRadius: 25,
+          //       backgroundColor: context => {
+          //         return context.dataset.backgroundColor;
+          //       },
+          //       font: {
+          //         weight: "bold",
+          //         size: 15
+          //       },
+          //       formatter: value => {
+          //         return value + " %";
+          //       }
+          //     }
+          //   },
           legend: {
             display: true,
             position: "bottom"
