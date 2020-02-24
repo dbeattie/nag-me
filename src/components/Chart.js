@@ -3,8 +3,7 @@ import { Pie } from "react-chartjs-2";
 import axios from "axios";
 
 const Chart = props => {
-  const [NagCompletionData, setNagCompletionData] = React.useState([]);
-  
+  // const [NagCompletionData, setNagCompletionData] = React.useState([]);
 
   const fetchData = async () => {
     try {
@@ -14,16 +13,32 @@ const Chart = props => {
       );
 
       //Convert the object that comes back into an array of objects
-      const nagsArr = Object.keys(nags.data).map(nags => {
-        return nags.data[nags];
+      const nagsArr = Object.keys(nags.data).map(nag => {
+        return nags.data[nag];
       });
+      // console.log("nags are ", nagsArr)
 
-      setNagCompletionData(nagsArr);
+      setState({
+        chartData: {
+          labels: [
+            "Days Nag Completed",
+            "Days Nags Incomplete",
+            "Nags With No Reply"
+          ],
+          fontSize: 200,
+          datasets: [
+            {
+              label: "Nag Completion",
+              data: nagsArr,
+              backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
+            }
+          ]
+        }
+      });
     } catch (error) {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,13 +54,12 @@ const Chart = props => {
       datasets: [
         {
           label: "Nag Completion",
-          data: [76, 50, 20],
+          data: [],
           backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
         }
       ]
     }
   });
-
   return (
     <div className="chart">
       <Pie
