@@ -81,13 +81,13 @@ export default function SignUp() {
     }
 
     axios
-      .post("http://localhost:8001/api/register", newUser, {withCredentials: true})
+      .post("http://localhost:8001/api/register", newUser, { withCredentials: true })
       .then(res => {
         setAuth(true)
         setUser(res.data.user.id)
       })
       .catch(err => {
-        console.error(err);
+        console.error("Error logging in please try again", err);
         alert("Error logging in please try again");
       });
   };

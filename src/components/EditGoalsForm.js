@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MaterialUIPickers from './Picker';
@@ -33,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EditGoals(props) {
   console.log("i am the props: ", props);
+  console.log("I am the passed in enddate: ", props.endDate);
   const classes = useStyles();
 
   const getNagName = async () => {
@@ -51,7 +53,6 @@ export default function EditGoals(props) {
     // console.log("I am filterNag:", filterNags.nag_name);
     setNag(filterNags.nag_name);
   }
-    
 
   useEffect(() => {
     console.log("getNagName:", getNagName())
@@ -69,7 +70,7 @@ export default function EditGoals(props) {
   const startdate =new Date();
 
   // getNagName();
-
+  let history = useHistory();
   const submitMe = (e) => {
     e.preventDefault();
     axios.put('http://localhost:8001/api/goals/edit', { goalid, goal, startdate, enddate, phone1, phone2, nag })
@@ -77,6 +78,8 @@ export default function EditGoals(props) {
       // console.log(res);
       // console.log(res.data);
     })
+    console.log("hello, I am going to redirect to Goals page!");
+    history.push("/goals");
   }
 
   return (
@@ -128,10 +131,10 @@ export default function EditGoals(props) {
             {/* <h2>Frequency</h2> */}
             {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
             <h2>Completion Date</h2>
-            <MaterialUIPickers 
-              updateDate={(selectedDate) => {
-                // console.log(selectedDate);
-                setEnddate(selectedDate);
+            <MaterialUIPickers
+              initialEndDate={props.endDate}
+              updateDate={(d) => {
+                setEnddate(d);
               }}
             />
             <Button 
@@ -147,5 +150,6 @@ export default function EditGoals(props) {
         </div>
       </Grid>
     </Grid>
+
   );
 }
