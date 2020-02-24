@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import axios from "axios";
 import FloatingActionButton from './CreateNewFloatingButton';
 import GoalOutlinedCard from './GoalCard';
 import EditGoals from './EditGoalsForm';
+import { Redirect } from "react-router-dom";
+import AuthContext from '../helpers/AuthContext';
 
 // import styled from "styled-components";
 
@@ -18,6 +20,7 @@ export default function GoalsIndex(props) {
 
   const [card, setCard] = React.useState([]);
   const [editing, setEditing] = React.useState(false);
+  const {auth, setAuth} = useContext(AuthContext);
 
   // console.log("GOAL PAGE USER:", user)
 
