@@ -8,7 +8,7 @@ const Chart = props => {
       datasets: [
         {
           label: "Nag Completion",
-          data: [80, 20],
+          data: [80000, 199990],
           backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
         }
       ]
