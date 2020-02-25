@@ -105,6 +105,7 @@ export default function NagTracker(props) {
         key={nag.id}
         id={nag.id}
         name={nag.nag_name}
+        simpleEndDate={nag.simple_date}
         endDate={nag.date}
         completion={nag.completion}
         nagYes={nagYes}
