@@ -3,71 +3,62 @@ import { Pie } from "react-chartjs-2";
 import axios from "axios";
 
 const Chart = props => {
+    console.log("props data is ",props.data)
   // const [NagCompletionData, setNagCompletionData] = React.useState([]);
 
-  const fetchData = async () => {
-    try {
-      const nags = await axios.get(
-        "http://localhost:8001/api/nags/completiondata",
-        { withCredentials: true }
-      );
+//   const fetchData = async () => {
+    
+//       // console.log("nags are ", nagsArr)
 
-      //Convert the object that comes back into an array of objects
-      const nagsArr = Object.keys(nags.data).map(nag => {
-        return nags.data[nag];
-      });
-      // console.log("nags are ", nagsArr)
+    //   setState({
+    //     chartData: {
+    //       labels: [
+    //         "Days Nag Completed",
+    //         "Days Nags Incomplete",
+    //         "Nags With No Reply"
+    //       ],
+    //       fontSize: 200,
+    //       datasets: [
+    //         {
+    //           label: "Nag Completion",
+    //           data: nagsArr,
+    //           backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
+    //         }
+    //       ]
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
+  
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
 
-      setState({
-        chartData: {
-          labels: [
-            "Days Nag Completed",
-            "Days Nags Incomplete",
-            "Nags With No Reply"
-          ],
-          fontSize: 200,
-          datasets: [
-            {
-              label: "Nag Completion",
-              data: nagsArr,
-              backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
-            }
-          ]
-        }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const [state, setState] = useState({
-    chartData: {
-      labels: [
+  const chartData = { 
+       labels: [
         "Days Nag Completed",
         "Days Nags Incomplete",
         "Nags With No Reply"
       ],
-      fontSize: 200,
+      fontSize: 20,
       datasets: [
         {
           label: "Nag Completion",
-          data: [],
+          data: props.data ,
           backgroundColor: ["#FB3640", "#253D5B", "#EFCA08", "#43AA8B"]
         }
       ]
     }
-  });
+  
   return (
     <div className="chart">
       <Pie
-        data={state.chartData}
+        data={chartData}
         options={{
           title: {
             display: true,
-            text: `Nag Completion Rate`,
+            text: `Total Nag Completion Rate`,
             fontSize: 25,
             align: "center",
             responsive: true

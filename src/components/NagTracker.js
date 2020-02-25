@@ -37,19 +37,31 @@ export default function NagTracker(props) {
   const { user } = useContext(UserContext);
   const [nags, setNags] = React.useState([]);
   const { auth, setAuth } = useContext(AuthContext);
+  const [chart, setChart] = React.useState([]);
+
 
   //Get data from nags table from database
   const fetchNags = async () => {
-    try {
+   try {
+          const nags = await axios.get(
+          "http://localhost:8001/api/nags/completiondata",
+          { withCredentials: true }
+        );
+  
+        //Convert the object that comes back into an array of objects
+        const nagsArr = Object.keys(nags.data).map(nag => {
+          return nags.data[nag];
+        });
+
       const allNags = await axios.get("http://localhost:8001/api/nags", {
         withCredentials: true
       });
-
+      console.log("nag arr is ", nagsArr)
       //Convert the object that comes back into an array of objects
       const nagArray = Object.keys(allNags.data).map(nag => {
         return allNags.data[nag];
       });
-
+      setChart(nagsArr)
       setNags(nagArray);
     } catch (error) {
       console.error(error);
@@ -59,6 +71,9 @@ export default function NagTracker(props) {
   useEffect(() => {
     fetchNags();
   }, []);
+
+
+  console.log("chart data is ", chart)
 
   const nagYes = id => {
     axios
@@ -94,6 +109,7 @@ export default function NagTracker(props) {
         completion={nag.completion}
         nagYes={nagYes}
         nagNo={nagNo}
+
       />
     );
   });
@@ -104,7 +120,7 @@ export default function NagTracker(props) {
     return (
       <div>
         <h1> Nags </h1>
-        <Chart />
+        <Chart data={chart} />
         <section className="goalCards" style={{ maxwidth: "100%" }}>
           {nagCards}
         </section>
