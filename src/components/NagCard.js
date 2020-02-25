@@ -5,7 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import axios from 'axios'
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -19,24 +19,8 @@ const useStyles = makeStyles({
   }
 });
 
-
-
-
 export default function NagOutlinedCard(props) {
-    const classes = useStyles();
-        const nagYes = (id) => {
-            axios.post('http://localhost:8001/api/nags/toggletrue', { id })
-              .then(res => {
-                console.log("I am res.data:", res);
-              })
-          }
-
-          const nagNo = (id) => {
-            axios.post('http://localhost:8001/api/nags/togglefalse', { id })
-              .then(res => {
-                console.log("I am res.data:", res);
-              })
-          }
+  const classes = useStyles();
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -48,10 +32,10 @@ export default function NagOutlinedCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" onClick={() => nagYes(props.id)}>
-           Yes 
+        <Button size="small" color="primary" onClick={() => props.nagYes(props.id)}>
+          Yes
         </Button>
-        <Button size="small" color="primary" onClick={() => nagNo(props.id)}>
+        <Button size="small" color="primary" onClick={() => props.nagNo(props.id)}>
           No
         </Button>
       </CardActions>
