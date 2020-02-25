@@ -13,7 +13,7 @@ export default function MaterialUIPickers(props) {
   // const [selectedDate, setSelectedDate] = React.useState(new Date().getTime());
 
   const initialDate = props.initialEndDate ? props.initialEndDate : new Date().getTime();
-  console.log("i am the initialDate:", initialDate);
+  // console.log("I Am the Initial Date:", initialDate);
   const [selectedDate, setSelectedDate] = useState(initialDate);
 
   const handleDateChange = date => {

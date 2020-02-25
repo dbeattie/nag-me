@@ -48,12 +48,12 @@ export default function EditGoals(props) {
 
     console.log("NAG ARRAY:", nagArray[0])
 
-    setNag(nagArray[0].nag_name);
-    setGoalId(goals[0].id)
-    setGoal(goals[0].goal_name)
-    setEndDate(goals[0].end_date)
-    setPhone1(goals[0].friend_1_phone_number)
-    setPhone2(goals[0].friend_2_phone_number)
+    // setNag(nagArray[1].nag_name);
+    setGoalId(goals[1].id)
+    setGoal(goals[1].goal_name)
+    setEndDate(goals[1].end_date)
+    setPhone1(goals[1].friend_1_phone_number)
+    setPhone2(goals[1].friend_2_phone_number)
   }
 
   useEffect(() => {
@@ -61,20 +61,20 @@ export default function EditGoals(props) {
   }, [])
 
   const {goals, setGoals} = useContext(GoalsContext);
-  const [goalid, setGoalId] = React.useState(props.id || "");
+  const [goalId, setGoalId] = React.useState(props.id || "");
   const [goal, setGoal] = React.useState(props.name || "");
   const [nag, setNag] = React.useState("");
   const [endDate, setEndDate] = React.useState('');
   const [phone1, setPhone1] = React.useState(props.friend1 || '');
   const [phone2, setPhone2] = React.useState(props.friend2 || '');
 
-  const startdate =new Date();
+  const startDate =new Date();
 
   let history = useHistory();
 
   const submitMe = (e) => {
     e.preventDefault();
-    axios.put('http://localhost:8001/api/goals/edit', { goalid, goal, startdate, endDate, phone1, phone2, nag })
+    axios.put('http://localhost:8001/api/goals/edit', { goalId, goal, startDate, endDate, phone1, phone2, nag })
     .then(res => {
       // console.log(res);
       // console.log(res.data);
@@ -83,7 +83,7 @@ export default function EditGoals(props) {
     history.push("/goals");
   }
 
-  console.log("WHAT End Date is Being Passed:", endDate);
+  // console.log("WHAT End Date is Being Passed:", endDate);
   
   return (
     <Grid container component="main" className={classes.root}>
@@ -135,7 +135,7 @@ export default function EditGoals(props) {
             {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
             <h2>Completion Date</h2>
             <MaterialUIPickers
-              initialEndDate={endDate}
+              initialEndDate={props.endDate}
               updateDate={(d) => {
                 setEndDate(d);
               }}
