@@ -17,8 +17,7 @@ import GoalsIndex from './components/GoalsIndex';
 import Video from './components/Video';
 import AuthContext from './helpers/AuthContext';
 import UserContext from './helpers/UserContext';
-
-
+import GoalsContext from './helpers/GoalsContext';
 
 import './App.css';
 
@@ -53,6 +52,7 @@ function App(props) {
 
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState('');
+  const [goals, setGoals] = useState([]);
 
   useEffect(() => {
     checkAuth().then(value => {
@@ -63,34 +63,36 @@ function App(props) {
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <UserContext.Provider value={{ user, setUser }}>
-        <Router>
-          <div>
-            <NavBar />
-          </div>
-          <Switch>
-            <Route path="/home">
-              <Video />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <SignUp />
-            </Route>
-            <PrivateRoute path="/goals/new">
-              <CreateGoals />
-            </PrivateRoute>
-            {/* DATA DOESN'T GET COPIED OVER FROM GOALS THIS WAY <PrivateRoute path="/goals/edit">
-              <EditGoals />
-            </PrivateRoute> */}
-            <PrivateRoute path="/goals">
-              <GoalsIndex />
-            </PrivateRoute>
-            <PrivateRoute path="/nags">
-              <NagTracker />
-            </PrivateRoute>
-          </Switch>
-        </Router>
+        <GoalsContext.Provider value={{ goals, setGoals }}> 
+          <Router>
+            <div>
+              <NavBar />
+            </div>
+            <Switch>
+              <Route path="/home">
+                <Video />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <SignUp />
+              </Route>
+              <PrivateRoute exact path="/goals/edit">
+                <EditGoals />
+              </PrivateRoute>
+              <PrivateRoute exact path="/goals">
+                <GoalsIndex />
+              </PrivateRoute>
+              <PrivateRoute path="/goals/new">
+                <CreateGoals />
+              </PrivateRoute>
+              <PrivateRoute path="/nags">
+                <NagTracker />
+              </PrivateRoute>
+            </Switch>
+          </Router>
+        </GoalsContext.Provider>
       </UserContext.Provider>
     </AuthContext.Provider>
   )

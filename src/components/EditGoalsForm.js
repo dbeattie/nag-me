@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from 'axios';
+import GoalsContext from '../helpers/GoalsContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,47 +34,47 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function EditGoals(props) {
-  console.log("i am the props: ", props);
-  console.log("I am the passed in enddate: ", props.endDate);
+  // console.log("i am the props: ", props);
+  // console.log("I am the passed in endDate: ", props.endDate);
   const classes = useStyles();
 
   const getNagName = async () => {
   
-    const result = await axios.get("http://localhost:8001/api/nags",)
+    const result = await axios.get("http://localhost:8001/api/nags", { withCredentials: true })
     
     const nagArray = Object.keys(result.data).map(nag => {
       return result.data[nag];
     });
 
-    const filterNags = nagArray.find(obj => {
-      if (obj.goal_id === props.id) {
-        return obj.nag_name;
-      } else return null;
-    });
-    // console.log("I am filterNag:", filterNags.nag_name);
-    setNag(filterNags.nag_name);
+    console.log("NAG ARRAY:", nagArray[0])
+
+    setNag(nagArray[0].nag_name);
+    setGoalId(goals[0].id)
+    setGoal(goals[0].goal_name)
+    setEndDate(goals[0].end_date)
+    setPhone1(goals[0].friend_1_phone_number)
+    setPhone2(goals[0].friend_2_phone_number)
   }
 
   useEffect(() => {
-    console.log("getNagName:", getNagName())
     getNagName();
   }, [])
 
-
+  const {goals, setGoals} = useContext(GoalsContext);
+  const [goalid, setGoalId] = React.useState(props.id || "");
   const [goal, setGoal] = React.useState(props.name || "");
-  const [goalid, setGoalid] = React.useState(props.id || "");
   const [nag, setNag] = React.useState("");
-  const [enddate, setEnddate] = React.useState('');
+  const [endDate, setEndDate] = React.useState('');
   const [phone1, setPhone1] = React.useState(props.friend1 || '');
   const [phone2, setPhone2] = React.useState(props.friend2 || '');
 
   const startdate =new Date();
 
-  // getNagName();
   let history = useHistory();
+
   const submitMe = (e) => {
     e.preventDefault();
-    axios.put('http://localhost:8001/api/goals/edit', { goalid, goal, startdate, enddate, phone1, phone2, nag })
+    axios.put('http://localhost:8001/api/goals/edit', { goalid, goal, startdate, endDate, phone1, phone2, nag })
     .then(res => {
       // console.log(res);
       // console.log(res.data);
@@ -82,6 +83,8 @@ export default function EditGoals(props) {
     history.push("/goals");
   }
 
+  console.log("WHAT End Date is Being Passed:", endDate);
+  
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -132,9 +135,9 @@ export default function EditGoals(props) {
             {/* insert multiple small icons with days of the week for nags.  Use node-con to hook up */}
             <h2>Completion Date</h2>
             <MaterialUIPickers
-              initialEndDate={props.endDate}
+              initialEndDate={endDate}
               updateDate={(d) => {
-                setEnddate(d);
+                setEndDate(d);
               }}
             />
             <Button 

@@ -1,10 +1,11 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import axios from "axios";
 import FloatingActionButton from './CreateNewFloatingButton';
 import GoalOutlinedCard from './GoalCard';
 import EditGoals from './EditGoalsForm';
 import { Redirect } from "react-router-dom";
 import AuthContext from '../helpers/AuthContext';
+import GoalsContext from '../helpers/GoalsContext';
 
 // import styled from "styled-components";
 
@@ -21,6 +22,7 @@ export default function GoalsIndex(props) {
   const [card, setCard] = React.useState([]);
   const [editing, setEditing] = React.useState(false);
   const {auth, setAuth} = useContext(AuthContext);
+  const {goals, setGoals} = useContext(GoalsContext);
 
   // console.log("GOAL PAGE USER:", user)
 
@@ -35,6 +37,7 @@ export default function GoalsIndex(props) {
       });
 
       setCard(goalsArr);
+      setGoals(goalsArr);
       
     } catch (error) {
       console.error(error)
@@ -52,17 +55,7 @@ export default function GoalsIndex(props) {
       })
   }
 
-  // const editGoal = (currentGoal) => {
-  //   return (
-  //     <EditGoals
-  //       id={currentGoal.id}
-  //       name={currentGoal.name}
-  //       endDate={currentGoal.endDate}
-  //       friend1={currentGoal.friend1}
-  //       friend2={currentGoal.friend2}
-  //     />
-  //   )
-  // };
+  console.log("WHAT ARE GOALS ARE AVAILABLE:", goals);
 
   const goalCards = card.map((goal) => {
     return (
@@ -70,6 +63,7 @@ export default function GoalsIndex(props) {
         key={goal.id}
         id={goal.id}
         name={goal.goal_name}
+        simpleEndDate={goal.simple_end_date} 
         endDate={goal.end_date}
         friend1={goal.friend_1_phone_number}
         friend2={goal.friend_2_phone_number}
@@ -78,7 +72,8 @@ export default function GoalsIndex(props) {
       />
     );
   });
-
+  
+  // simplifiedEndDate={editing.simple_end_date} 
   if (!auth) {
     return (<Redirect to="/login" />); 
   } else {
@@ -87,6 +82,7 @@ export default function GoalsIndex(props) {
         { editing && (<EditGoals
           id={editing.id}
           name={editing.name}
+          simpleEndDate={editing.simpleEndDate} 
           endDate={editing.endDate}
           friend1={editing.friend1}
           friend2={editing.friend2}

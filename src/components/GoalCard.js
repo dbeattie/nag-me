@@ -28,16 +28,17 @@ export default function GoalOutlinedCard(props) {
           {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Ends on: {props.endDate}
+          Ends on: {props.simpleEndDate}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" component={Link} to="/goals/edit" onClick={() => props.edit(props)}>
+        <Button size="medium" variant="outlined" color="primary" component={Link} to="/goals/edit" onClick={() => props.edit(props)}>
           Edit
         </Button>
         <Button
-          size="small"
-          color="primary"
+          size="medium"
+          variant="outlined"
+          color="secondary"
           onClick={() => props.delete(props.id)}
         >
           Delete
