@@ -81,7 +81,7 @@ export default function EditGoals(props) {
       console.log("I am the response data:", res.data);
     })
     console.log("hello, I am going to redirect to Goals page!");
-    history.push("/goals");
+    history.push("/nags");
   }
 
   // console.log("WHAT End Date is Being Passed:", endDate);
