@@ -87,7 +87,7 @@ export default function GoalsIndex(props) {
           endDate={editing.endDate}
           friend1={editing.friend1}
           friend2={editing.friend2}
-          dismiss={() => setTimeout(() => { setEditing(false); }, 3000)}
+          dismiss={() => setTimeout(() => { setEditing(false); }, 2000)}
         />
         ) : (<>
               {/* <StyledHeader> */}
