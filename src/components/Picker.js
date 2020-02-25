@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -12,11 +12,13 @@ export default function MaterialUIPickers(props) {
   // The first commit of Material-UI
   // const [selectedDate, setSelectedDate] = React.useState(new Date().getTime());
 
-  const initalDate = props.initialEndDate ? props.initialEndDate : new Date().getTime();
-  const [selectedDate, setSelectedDate] = React.useState(initalDate);
+  const initialDate = props.initialEndDate ? props.initialEndDate : new Date().getTime();
+  console.log("i am the initialDate:", initialDate);
+  const [selectedDate, setSelectedDate] = useState(initialDate);
 
   const handleDateChange = date => {
     setSelectedDate(date);
+    console.log("DATE:", date)
     props.updateDate(date);
   };
 
