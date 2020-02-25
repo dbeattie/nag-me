@@ -21,24 +21,24 @@ export default function GoalsIndex(props) {
 
   const [card, setCard] = React.useState([]);
   const [editing, setEditing] = React.useState(false);
-  const {auth, setAuth} = useContext(AuthContext);
-  const {goals, setGoals} = useContext(GoalsContext);
+  const { auth, setAuth } = useContext(AuthContext);
+  const { goals, setGoals } = useContext(GoalsContext);
 
   // console.log("GOAL PAGE USER:", user)
 
   const fetchData = async () => {
-    
+
     try {
       const goals = await axios.get("http://localhost:8001/api/goals", { withCredentials: true })
-      
+  
       //Convert the object that comes back into an array of objects
       const goalsArr = Object.keys(goals.data).map(goal => {
         return goals.data[goal]
       });
-
+  
       setCard(goalsArr);
       setGoals(goalsArr);
-      
+  
     } catch (error) {
       console.error(error)
     }
@@ -55,7 +55,7 @@ export default function GoalsIndex(props) {
       })
   }
 
-  console.log("WHAT ARE GOALS ARE AVAILABLE:", goals);
+  // console.log("WHAT ARE GOALS ARE AVAILABLE:", goals);
 
   const goalCards = card.map((goal) => {
     return (
@@ -63,7 +63,7 @@ export default function GoalsIndex(props) {
         key={goal.id}
         id={goal.id}
         name={goal.goal_name}
-        simpleEndDate={goal.simple_end_date} 
+        simpleEndDate={goal.simple_end_date}
         endDate={goal.end_date}
         friend1={goal.friend_1_phone_number}
         friend2={goal.friend_2_phone_number}
@@ -72,30 +72,35 @@ export default function GoalsIndex(props) {
       />
     );
   });
-  
-  // simplifiedEndDate={editing.simple_end_date} 
+
+  // simplifiedEndDate={editing.simple_end_date}
   if (!auth) {
-    return (<Redirect to="/login" />); 
+    return (<Redirect to="/login" />);
   } else {
+    console.log("I am the editing hook which was set by GoalCard's edit button: ", editing);
     return (
       <div>
-        { editing && (<EditGoals
+        {editing ? (<EditGoals
           id={editing.id}
           name={editing.name}
-          simpleEndDate={editing.simpleEndDate} 
+          simpleEndDate={editing.simpleEndDate}
           endDate={editing.endDate}
           friend1={editing.friend1}
           friend2={editing.friend2}
+          dismiss={() => setTimeout(() => { setEditing(false); }, 2000)}
         />
-      )}
-      {/* <StyledHeader> */}
-        <h1>Goals</h1>   
-      {/* </StyledHeader> */}
-        <section className="goalCards" style={{ maxwidth: "100%" }}>
-          {goalCards}
-        </section>
-        
-        <FloatingActionButton />
+        ) : (<>
+              {/* <StyledHeader> */}
+              <h1>Goals</h1>
+              {/* </StyledHeader> */}
+              <section className="goalCards" style={{ maxwidth: "100%" }}>
+                {goalCards}
+              </section>
+
+              <FloatingActionButton />
+            </>)
+        }
+
       </div>
     );
   }

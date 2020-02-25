@@ -78,9 +78,9 @@ function App(props) {
               <Route path="/register">
                 <SignUp />
               </Route>
-              <PrivateRoute exact path="/goals/edit">
+              {/* <PrivateRoute exact path="/goals/edit">
                 <EditGoals />
-              </PrivateRoute>
+              </PrivateRoute> */}
               <PrivateRoute exact path="/goals">
                 <GoalsIndex />
               </PrivateRoute>

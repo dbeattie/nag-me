@@ -49,11 +49,11 @@ export default function EditGoals(props) {
     console.log("NAG ARRAY:", nagArray[0])
 
     // setNag(nagArray[1].nag_name);
-    setGoalId(goals[1].id)
-    setGoal(goals[1].goal_name)
-    setEndDate(goals[1].end_date)
-    setPhone1(goals[1].friend_1_phone_number)
-    setPhone2(goals[1].friend_2_phone_number)
+    // setGoalId(goals[1].id)
+    // setGoal(goals[1].goal_name)
+    // setEndDate(goals[1].end_date)
+    // setPhone1(goals[1].friend_1_phone_number)
+    // setPhone2(goals[1].friend_2_phone_number)
   }
 
   useEffect(() => {
@@ -70,17 +70,18 @@ export default function EditGoals(props) {
 
   const startDate =new Date();
 
+  // console.log("I am props.endDate:", props.endDate);
+
   let history = useHistory();
 
   const submitMe = (e) => {
     e.preventDefault();
-    axios.put('http://localhost:8001/api/goals/edit', { goalId, goal, startDate, endDate, phone1, phone2, nag })
+    axios.put('http://localhost:8001/api/goals/edit', { goalId, goal, startDate, endDate, phone1, phone2, nag }, { withCredentials: true })
     .then(res => {
-      // console.log(res);
-      // console.log(res.data);
+      console.log("I am the response data:", res.data);
     })
     console.log("hello, I am going to redirect to Goals page!");
-    history.push("/goals");
+    history.push("/nags");
   }
 
   // console.log("WHAT End Date is Being Passed:", endDate);
@@ -146,6 +147,7 @@ export default function EditGoals(props) {
               variant="contained" 
               color="primary" 
               type="submit"
+              onClick={props.dismiss}
             >
               Submit
             </Button>

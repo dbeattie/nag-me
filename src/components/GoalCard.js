@@ -21,6 +21,7 @@ const useStyles = makeStyles({
 
 export default function GoalOutlinedCard(props) {
   const classes = useStyles();
+  // console.log("I am the props from GoalCard which is going to pass to eidting hook:", props);
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -32,7 +33,7 @@ export default function GoalOutlinedCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="medium" variant="outlined" color="primary" component={Link} to="/goals/edit" onClick={() => props.edit(props)}>
+        <Button size="medium" variant="outlined" color="primary" onClick={() => props.edit(props)}>
           Edit
         </Button>
         <Button
