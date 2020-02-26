@@ -5,8 +5,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import ClearIcon from '@material-ui/icons/Clear';
+import CheckIcon from '@material-ui/icons/Check';
 import Slide from '@material-ui/core/Slide';
-import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles({
   root: {
@@ -46,10 +47,18 @@ export default function NagOutlinedCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={handleClickYes}>
+          <Button 
+            size="medium" 
+            color="primary" 
+            startIcon={<CheckIcon />}
+            onClick={handleClickYes}>
             Yes
           </Button>
-          <Button size="small" color="primary" onClick={handleClickNo}>
+          <Button 
+            size="medium" 
+            color="secondary" 
+            endIcon={<ClearIcon />}
+            onClick={handleClickNo}>
             No
           </Button>
         </CardActions>

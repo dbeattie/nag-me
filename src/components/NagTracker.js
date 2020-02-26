@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import AuthContext from "../helpers/AuthContext";
@@ -6,38 +6,13 @@ import UserContext from "../helpers/UserContext";
 import NagOutlinedCard from "./NagCard";
 import Chart from "./Chart";
 
-// //Styling, don't touch for now, may apply to this page.
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     width: '100%',
-//   },
-//   paper: {
-//     width: '100%',
-//     marginBottom: theme.spacing(2),
-//   },
-//   table: {
-//     minWidth: 750,
-//   },
-//   visuallyHidden: {
-//     border: 0,
-//     clip: 'rect(0 0 0 0)',
-//     height: 1,
-//     margin: -1,
-//     overflow: 'hidden',
-//     padding: 0,
-//     position: 'absolute',
-//     top: 20,
-//     width: 1,
-//   },
-// }));
-
 export default function NagTracker(props) {
   //NOT SURE if user useContext is necessary anymore, after all the back end changes...
   // const [editing, setEditing] = React.useState(false);
   const { user } = useContext(UserContext);
-  const [nags, setNags] = React.useState([]);
+  const [nags, setNags] = useState([]);
   const { auth, setAuth } = useContext(AuthContext);
-  const [chart, setChart] = React.useState([]);
+  const [chart, setChart] = useState([]);
 
 
   //Get data from nags table from database
@@ -120,7 +95,7 @@ export default function NagTracker(props) {
   } else {
     return (
       <div>
-        <h1> Nags </h1>
+        <h1>&nbsp;&nbsp;Nags</h1>
         <Chart data={chart} />
         <section className="goalCards" style={{ maxwidth: "100%" }}>
           {nagCards}
