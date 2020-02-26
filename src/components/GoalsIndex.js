@@ -7,20 +7,10 @@ import { Redirect } from "react-router-dom";
 import AuthContext from '../helpers/AuthContext';
 import GoalsContext from '../helpers/GoalsContext';
 
-// import styled from "styled-components";
-
-// const StyledHeader = styled.div`
-//   align-items: center;
-//   h2 {
-//     font-family: Arial, Helvetica, sans-serif;
-//     font-size: 14px;
-//   }
-// `;
-
 export default function GoalsIndex(props) {
 
-  const [card, setCard] = React.useState([]);
-  const [editing, setEditing] = React.useState(false);
+  const [card, setCard] = useState([]);
+  const [editing, setEditing] = useState(false);
   const { auth, setAuth } = useContext(AuthContext);
   const { goals, setGoals } = useContext(GoalsContext);
 
@@ -90,9 +80,7 @@ export default function GoalsIndex(props) {
           dismiss={() => setTimeout(() => { setEditing(false); }, 2000)}
         />
         ) : (<>
-              {/* <StyledHeader> */}
-              <h1>Goals</h1>
-              {/* </StyledHeader> */}
+             <h1>&nbsp;&nbsp;Goals</h1>
               <section className="goalCards" style={{ maxwidth: "100%" }}>
                 {goalCards}
               </section>
