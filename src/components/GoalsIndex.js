@@ -67,7 +67,6 @@ export default function GoalsIndex(props) {
   if (!auth) {
     return (<Redirect to="/login" />);
   } else {
-    console.log("I am the editing hook which was set by GoalCard's edit button: ", editing);
     return (
       <div>
         {editing ? (<EditGoals
