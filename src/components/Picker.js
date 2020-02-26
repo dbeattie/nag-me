@@ -15,10 +15,10 @@ export default function MaterialUIPickers(props) {
   const initialDate = props.initialEndDate ? props.initialEndDate : new Date().getTime();
   // console.log("I Am the Initial Date:", initialDate);
   const [selectedDate, setSelectedDate] = useState(initialDate);
+  // console.log("I am the default selectedDate:", selectedDate);
 
   const handleDateChange = date => {
     setSelectedDate(date);
-    console.log("DATE:", date)
     props.updateDate(date);
   };
 
