@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -46,6 +46,12 @@ export default function EditGoals(props) {
     const nagArray = Object.keys(result.data).map(nag => {
       return result.data[nag];
     });
+
+    var nagName = nagArray.find(obj => {
+      return obj.goal_id === goalId
+    })
+
+    setNag(nagName.nag_name);
   };
 
   useEffect(() => {
@@ -53,12 +59,12 @@ export default function EditGoals(props) {
   }, []);
 
   const { goals, setGoals } = useContext(GoalsContext);
-  const [goalId, setGoalId] = React.useState(props.id || "");
-  const [goal, setGoal] = React.useState(props.name || "");
-  const [nag, setNag] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
-  const [phone1, setPhone1] = React.useState(props.friend1 || "");
-  const [phone2, setPhone2] = React.useState(props.friend2 || "");
+  const [goalId, setGoalId] = useState(props.id || "");
+  const [goal, setGoal] = useState(props.name || "");
+  const [nag, setNag] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [phone1, setPhone1] = useState(props.friend1 || "");
+  const [phone2, setPhone2] = useState(props.friend2 || "");
 
   const startDate = new Date();
 
