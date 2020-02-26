@@ -5,7 +5,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
+import Slide from '@material-ui/core/Slide';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles({
   root: {
@@ -21,24 +22,38 @@ const useStyles = makeStyles({
 
 export default function NagOutlinedCard(props) {
   const classes = useStyles();
+  const [checked, setChecked] = React.useState(true);
+
+  const handleClickYes = () => {
+    props.nagYes(props.id);
+    setChecked(false);
+  }
+
+  const handleClickNo = () => {
+    props.nagNo(props.id);
+    setChecked(false);
+  }
+
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {props.name}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          Complete Nag by: {props.simpleEndDate}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => props.nagYes(props.id)}>
-          Yes
-        </Button>
-        <Button size="small" color="primary" onClick={() => props.nagNo(props.id)}>
-          No
-        </Button>
-      </CardActions>
-    </Card>
+    <Slide direction="left" in={checked} mountOnEnter unmountOnExit>
+      <Card className={classes.root} variant="outlined">
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            {props.name}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            Complete Nag by: {props.simpleEndDate}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary" onClick={handleClickYes}>
+            Yes
+          </Button>
+          <Button size="small" color="primary" onClick={handleClickNo}>
+            No
+          </Button>
+        </CardActions>
+      </Card>
+    </Slide>
   );
 }
