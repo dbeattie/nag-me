@@ -29,7 +29,7 @@ const Chart = props => {
         options={{
           title: {
             display: true,
-            text: `Total Nag Completion Rate`,
+            text: `Your Nag Completion Rate`,
             fontSize: 25,
             align: "center",
             responsive: true
