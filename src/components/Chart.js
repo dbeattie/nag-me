@@ -46,7 +46,7 @@ const Chart = props => {
         {
           label: "Nag Completion",
           data: props.data ,
-          backgroundColor: ["#26D695", "#FF101F", "#CABAC8"]
+          backgroundColor: ["#3F51B5", "#F50057", "#CABAC8"] 
         }
       ]
     }
