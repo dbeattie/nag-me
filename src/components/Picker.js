@@ -16,6 +16,7 @@ export default function MaterialUIPickers(props) {
     : new Date().getTime();
 
   const [selectedDate, setSelectedDate] = useState(initialDate);
+  // console.log("I am the default selectedDate:", selectedDate);
 
   const handleDateChange = date => {
     setSelectedDate(date);

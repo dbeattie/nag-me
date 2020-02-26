@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import AuthContext from "../helpers/AuthContext";
@@ -8,11 +8,12 @@ import Chart from "./Chart";
 
 // function that handles the Nags and their functionality
 // ******************************************************
+
 export default function NagTracker(props) {
   const { user } = useContext(UserContext);
-  const [nags, setNags] = React.useState([]);
+  const [nags, setNags] = useState([]);
   const { auth, setAuth } = useContext(AuthContext);
-  const [chart, setChart] = React.useState([]);
+  const [chart, setChart] = useState([]);
 
   //Get data from nags table from database
   const fetchNags = async () => {
@@ -90,7 +91,7 @@ export default function NagTracker(props) {
   } else {
     return (
       <div>
-        <h1> Nags </h1>
+        <h1>&nbsp;&nbsp;Nags</h1>
         <Chart data={chart} />
         <section className="goalCards" style={{ maxwidth: "100%" }}>
           {nagCards}

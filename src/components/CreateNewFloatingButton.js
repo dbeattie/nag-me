@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -20,9 +21,11 @@ export default function FloatingActionButton() {
 
   return (
     <div>
-      <Fab color="secondary" aria-label="add" className={classes.fab}component={Link} to="/goals/new">
-        <AddIcon />
-      </Fab>
+      <Tooltip title="Add a Goal" placement="left-start">
+        <Fab color="secondary" aria-label="add" className={classes.fab}component={Link} to="/goals/new">
+          <AddIcon />
+        </Fab>
+      </Tooltip>
     </div>
   );
 }

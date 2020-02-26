@@ -21,6 +21,23 @@ const Chart = props => {
     ]
   };
 
+  const chartData = { 
+       labels: [
+        "Days Nag Completed",
+        "Days Nags Incomplete",
+        "Nags With No Reply"
+      ],
+      fontSize: 20,
+      datasets: [
+        {
+          label: "Nag Completion",
+          data: props.data ,
+          backgroundColor: ["#3F51B5", "#F50057", "#CABAC8"] 
+        }
+      ]
+   };
+  
+
   return (
     <div className="chart">
       <Pie
