@@ -1,43 +1,30 @@
-import 'date-fns';
-import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import "date-fns";
+import React, { useState } from "react";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  // KeyboardTimePicker,
   KeyboardDatePicker
-} from '@material-ui/pickers';
+} from "@material-ui/pickers";
+
+//handling MaterialUi date picker
+//*******************************
 
 export default function MaterialUIPickers(props) {
-  // The first commit of Material-UI
-  // const [selectedDate, setSelectedDate] = React.useState(new Date().getTime());
+  const initialDate = props.initialEndDate
+    ? props.initialEndDate
+    : new Date().getTime();
 
-  const initialDate = props.initialEndDate ? props.initialEndDate : new Date().getTime();
-  // console.log("I Am the Initial Date:", initialDate);
   const [selectedDate, setSelectedDate] = useState(initialDate);
 
   const handleDateChange = date => {
     setSelectedDate(date);
-    console.log("DATE:", date)
     props.updateDate(date);
   };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
-        {/* <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          label="Date picker inline"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        /> */}
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
@@ -46,19 +33,9 @@ export default function MaterialUIPickers(props) {
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change date',
+            "aria-label": "change date"
           }}
         />
-        {/* <KeyboardTimePicker                 comment time picker (stretch) for now
-          margin="normal"
-          id="time-picker"
-          label="Please select completion time:"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change time', 
-          }}
-        /> */}
       </Grid>
     </MuiPickersUtilsProvider>
   );

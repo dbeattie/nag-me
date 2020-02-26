@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+//function that creates a floating button
+// **************************************
+
 export default function FloatingActionButton() {
   const classes = useStyles();
 
