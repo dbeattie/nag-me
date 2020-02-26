@@ -9,6 +9,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
 import Slide from '@material-ui/core/Slide';
 
+
 const useStyles = makeStyles({
   root: {
     minWidth: 275
@@ -21,6 +22,8 @@ const useStyles = makeStyles({
   }
 });
 
+//function that creates a nag card
+// *******************************
 export default function NagOutlinedCard(props) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);

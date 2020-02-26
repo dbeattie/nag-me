@@ -6,37 +6,37 @@ import UserContext from "../helpers/UserContext";
 import NagOutlinedCard from "./NagCard";
 import Chart from "./Chart";
 
+// function that handles the Nags and their functionality
+// ******************************************************
+
 export default function NagTracker(props) {
-  //NOT SURE if user useContext is necessary anymore, after all the back end changes...
-  // const [editing, setEditing] = React.useState(false);
   const { user } = useContext(UserContext);
   const [nags, setNags] = useState([]);
   const { auth, setAuth } = useContext(AuthContext);
   const [chart, setChart] = useState([]);
 
-
   //Get data from nags table from database
   const fetchNags = async () => {
-   try {
-          const nags = await axios.get(
-          "http://localhost:8001/api/nags/completiondata",
-          { withCredentials: true }
-        );
-  
-        //Convert the object that comes back into an array of objects
-        const nagsArr = Object.keys(nags.data).map(nag => {
-          return nags.data[nag];
-        });
+    try {
+      const nags = await axios.get(
+        "http://localhost:8001/api/nags/completiondata",
+        { withCredentials: true }
+      );
+
+      //Convert the object that comes back into an array of objects
+      const nagsArr = Object.keys(nags.data).map(nag => {
+        return nags.data[nag];
+      });
 
       const allNags = await axios.get("http://localhost:8001/api/nags", {
         withCredentials: true
       });
-      console.log("nag arr is ", nagsArr)
+      console.log("nag arr is ", nagsArr);
       //Convert the object that comes back into an array of objects
       const nagArray = Object.keys(allNags.data).map(nag => {
         return allNags.data[nag];
       });
-      setChart(nagsArr)
+      setChart(nagsArr);
       setNags(nagArray);
     } catch (error) {
       console.error(error);
@@ -46,9 +46,6 @@ export default function NagTracker(props) {
   useEffect(() => {
     fetchNags();
   }, []);
-
-
-  console.log("chart data is ", chart)
 
   const nagYes = id => {
     axios
@@ -85,7 +82,6 @@ export default function NagTracker(props) {
         completion={nag.completion}
         nagYes={nagYes}
         nagNo={nagNo}
-
       />
     );
   });

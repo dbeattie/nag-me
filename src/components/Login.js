@@ -14,19 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import AuthContext from '../helpers/AuthContext';
 import UserContext from '../helpers/UserContext';
+import Copyright from "../helpers/CopyRight"
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.lighthouselabs.ca/">
-        Darren, Don & Kevin
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%", 
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -61,6 +50,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+//function that displays the login and handles user authentication
+// ***************************************************************
 export default function Login(props) {
 
   const classes = useStyles();
@@ -105,8 +97,7 @@ export default function Login(props) {
               className={classes.form}
               noValidate
               onSubmit={event => event.preventDefault()}
-              // onSubmit={this.handleSubmit}
-            >
+                     >
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -142,12 +133,7 @@ export default function Login(props) {
                 Sign In
               </Button>
               <Grid container>
-                {/* <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
-                <Grid item>
+                             <Grid item>
                   <Link href="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
