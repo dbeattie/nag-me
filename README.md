@@ -1,23 +1,28 @@
-# Nag-me.cpm
+# Nag-me
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Nag-me is a goal attainment app that helps user achieve their goals by holding them accountable to daily actions. The app holds the user accountable by texting Nags every morning and texting your friends at night to let them know if you didn't follow through that day. It's a mobile first design.
 
-## Available Scripts
+## Screenshots
 
-In the project directory, you can run:
+[Nag Tracker](https://raw.githubusercontent.com/dbeattie/nag-me/master/docs/NagTrackerChart.png "Nag Tracker")
+
+[Goal Page](https://raw.githubusercontent.com/dbeattie/nag-me/master/docs/GoalPage.png "Goal Page")
+
+## Setup
+
+In the project directory, first run:
+
+### `npm install`
+
+Install any dependencies.
 
 ### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
+The page will automatically reload if you make edits.<br />
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -39,7 +44,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Learn More About 'Create React App':
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
@@ -68,3 +73,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
