@@ -5,9 +5,9 @@ Nag-me is a goal attainment app that helps user achieve their goals by holding t
 
 ## Screenshots
 
-[Nag Tracker](https://raw.githubusercontent.com/dbeattie/nag-me/master/docs/NagTrackerChart.png "Nag Tracker")
+![Nag Tracker](https://raw.githubusercontent.com/dbeattie/nag-me/master/docs/NagTrackerChart.png "Nag Tracker")
 
-[Goal Page](https://raw.githubusercontent.com/dbeattie/nag-me/master/docs/GoalPage.png "Goal Page")
+![Goal Page](https://raw.githubusercontent.com/dbeattie/nag-me/master/docs/GoalPage.png "Goal Page")
 
 ## Setup
 
